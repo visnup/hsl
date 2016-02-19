@@ -13,21 +13,45 @@ html
       | 
       | The RGB You've Been Waiting For
       | -------------------------------
+
     notes
-      | This is a talk which I put together for the February 2016 PeninsulaJS
+      | This is a talk put together for the February 2016 [PeninsulaJS][1]
       | meetup. It should be digestable as a web page on its own and
       | interactive.
       | 
-      | The source for these slides is available at [github.com/visnup/hsl][src].
+      | The source for these slides is available at
+      | [github.com/visnup/hsl][2].
       | 
-      | [src]: https://github.com/visnup/hsl
+      | [1]: http://peninsulajs.com/
+      | [2]: https://github.com/visnup/hsl
 
     slide
       | The Problem
       | ===========
+      | 
+      | <div ng-init='lhs=$root.RGB("66","cc","00"); rhs=$root.RGB("33","33","33")'>
+      | <span class="swatch" ng-style="{backgroundColor: lhs}"></span>
+      | <input ng-model='lhs.r' placeholder='R' class='d' />
+      | <input ng-model='lhs.g' placeholder='G' class='d' />
+      | <input ng-model='lhs.b' placeholder='B' class='d' />
+      | +
+      | <span class="swatch" ng-style="{backgroundColor: rhs}"></span>
+      | <input ng-model='rhs.r' placeholder='R' class='d' />
+      | <input ng-model='rhs.g' placeholder='G' class='d' />
+      | <input ng-model='rhs.b' placeholder='B' class='d' />
+      | =
+      | <span class="swatch" ng-style="{backgroundColor: lhs.plus(rhs)}"></span>
+      | <input ng-model='lhs.plus(rhs).r' placeholder='R' class='d' readonly />
+      | <input ng-model='lhs.plus(rhs).g' placeholder='G' class='d' readonly />
+      | <input ng-model='lhs.plus(rhs).b' placeholder='B' class='d' readonly />
+      | </div>
+
     notes
-      | - RGB + RGB = 🤔
-      |   - Demo: Adding and subtracting RGB colors
+      | RGB + RGB = 🤔
+      | --------------
+      | Try adjusting the values above and try to make intuitive sense of
+      | what's happening. It kinda never makes sense.
+      | 
       | - It's about adding *light* together
       |   - Demo: RGB values next to each other and the color they make (zoom
       |     in and out)
@@ -102,26 +126,70 @@ html
       | - LABCIE
       
     script( src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js' )
+    script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js' )
     script( src='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js' )
     script.
+      'use strict'
+
+      marked.setOptions({ smartypants: true })
+
+      class RGB {
+        constructor(r, g, b) {
+          this.r = r
+          this.g = g
+          this.b = b
+        }
+
+        get r() { return this._r }
+        set r(r) { this.__r = parseInt(this._r = r, 16) }
+        get g() { return this._g }
+        set g(g) { this.__g = parseInt(this._g = g, 16) }
+        get b() { return this._b }
+        set b(b) { this.__b = parseInt(this._b = b, 16) }
+
+        plus(other) {
+          var r = _.clamp(this.__r + other.__r, 0, 255),
+              g = _.clamp(this.__g + other.__g, 0, 255),
+              b = _.clamp(this.__b + other.__b, 0, 255)
+          return new RGB(r.toString(16), g.toString(16), b.toString(16))
+        }
+
+        toString() {
+          return `rgb(${this.__r},${this.__g},${this.__b})`
+        }
+      }
+
       angular
         .module('hsl', [])
         .component('deck', {
-          controller() {
-            this.index = 0
+          controller($document) {
             this.slides = []
             
             this.add = function(slide) {
               slide.index(this.slides.length)
               this.slides.push(slide)
             }
+
+            $document.on('keydown', function(e) {
+              if (e.target.nodeName !== 'BODY') return
+              var index = +location.hash.slice(1) || 0
+              switch (e.keyIdentifier) {
+                case 'Right':
+                  index++
+                  break
+                case 'Left':
+                  index--
+                  break
+              }
+              location.hash = _.clamp(index, 0, this.slides.length)
+            }.bind(this))
           }
         })
         .component('slide', {
           require: { deck: '^deck' },
-          controller($element) {
-            var html = marked($element.text())
-            $element.html(html)
+          controller($scope, $element, $compile) {
+            var link = $compile(marked($element.html()))
+            $element.empty().append(link($scope))
             
             this.$onInit = function() {
               this.deck.add(this)
@@ -134,7 +202,9 @@ html
         })
         .component('notes', {
           controller($element) {
-            var html = marked($element.text())
-            $element.html(html)
+            $element.html(marked($element.text()))
           }
+        })
+        .run(function($rootScope) {
+          $rootScope.RGB = function(r, g, b) { return new RGB(r, g, b) }
         })

@@ -1,7 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Catamaran);
 
+body, input {
+  font: xx-large 'Catamaran', sans-serif;
+}
+
 body {
-  font: 200% 'Catamaran', sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -18,4 +21,16 @@ slide {
 notes {
   display: block;
   padding: 0 2rem;
+}
+
+input.d {
+  width: 3rem;
+  text-align: center;
+}
+
+.swatch {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  vertical-align: middle;
 }
