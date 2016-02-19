@@ -29,7 +29,7 @@ html
       | The Problem
       | ===========
       | 
-      | <div ng-init='lhs=$root.RGB("66","cc","00"); rhs=$root.RGB("33","33","33")'>
+      | <div ng-init='lhs=$root.RGB("ff","a5","00"); rhs=$root.RGB("33","33","33")'>
       | <span class="swatch" ng-style="{backgroundColor: lhs}"></span>
       | <input ng-model='lhs.r' placeholder='R' class='d' />
       | <input ng-model='lhs.g' placeholder='G' class='d' />
@@ -49,14 +49,60 @@ html
     notes
       | RGB + RGB = 🤔
       | --------------
-      | Try adjusting the values above and try to make intuitive sense of
-      | what's happening. It kinda never makes sense.
+      | `#ffa500` -- that's orange. `#ffd833` -- that's not a lighter orange;
+      | it's yellow. _Of course_, you're thinking, _one does not simply add
+      | some GB to RGB to lighten a color_.
       | 
-      | - It's about adding *light* together
-      |   - Demo: RGB values next to each other and the color they make (zoom
-      |     in and out)
-      | - Conclusion: RGB is not cool
-      
+      | Ok fine, then how do you lighten orange to get light orange? And wait,
+      | hold on: why can’t I just add Rs, Gs, and Bs to lighten my colors? I
+      | mean, my computer knows `1 + 1 = 2`; it and I can agree on that. Yet
+      | `#ffa500` + `#004999` yields some kinda related color, but in a way
+      | that doesn’t exactly make sense.
+      | 
+      | In what world is that cool? I'll tell you in what world: in an
+      | adding-colors-of-light-together world. You know who lives in that
+      | world?  LEDs and CRTs, that’s who. And scientists who play with lasers,
+      | AKA crazy people.
+
+    slide
+      | RGB is for adding light together
+      | ================================
+      | 
+      | <div ng-init='lhs=$root.RGB("ff","a5","00"); rhs=$root.RGB("33","33","33")'>
+      | <span class="swatch" ng-style="{backgroundColor: lhs}"></span>
+      | <input ng-model='lhs.r' placeholder='R' class='d' />
+      | <input ng-model='lhs.g' placeholder='G' class='d' />
+      | <input ng-model='lhs.b' placeholder='B' class='d' />
+      | +
+      | <span class="swatch" ng-style="{backgroundColor: rhs}"></span>
+      | <input ng-model='rhs.r' placeholder='R' class='d' />
+      | <input ng-model='rhs.g' placeholder='G' class='d' />
+      | <input ng-model='rhs.b' placeholder='B' class='d' />
+      | =
+      | <span class="swatch" ng-style="{backgroundColor: lhs.plus(rhs)}"></span>
+      | <input ng-model='lhs.plus(rhs).r' placeholder='R' class='d' readonly />
+      | <input ng-model='lhs.plus(rhs).g' placeholder='G' class='d' readonly />
+      | <input ng-model='lhs.plus(rhs).b' placeholder='B' class='d' readonly />
+      | </div>
+
+    notes
+      | - Demo: RGB values next to each other and the color they make (zoom
+      |   in and out)
+      | 
+      | RGB is _not_ like some single origin, shade-grown, 1,300 meter
+      | elevation coffee beans you found in Alajuela, Costa Rica and roasted in
+      | small batches to give to your friends in Oakland.
+      | 
+      | RGB _is_ like that guy in a North Face jacket and hoodie on the 38L
+      | Geary headed downtown, doing a line of cocaine off his iPhone. Yeah,
+      | RGB is not a | so-uncool-it’s-cool-again thing.
+
+    slide
+      | <img src="https://pbs.twimg.com/media/Ay25GrnCMAEgjyW.jpg" style="height: 50vh" />
+      | 
+      | Some guy doing lines of cocaine off his iphone on muni...  
+      | -- Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a>
+
     slide
       | Let's make our own color space
       | ==============================
