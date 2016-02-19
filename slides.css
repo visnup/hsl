@@ -1,0 +1,21 @@
+@import url(https://fonts.googleapis.com/css?family=Catamaran);
+
+body {
+  font: 200% 'Catamaran', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 10rem;
+}
+
+notes {
+  display: block;
+  padding: 0 2rem;
+}

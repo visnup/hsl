@@ -3,8 +3,9 @@ html
   head
     meta( charset='utf-8' )
     title HSL – The RGB You’ve Been Waiting For
+    link( href='slides.css' rel='stylesheet' type='text/css' )
 
-  body( ng-app='hsl' ): slide-deck
+  body( ng-app='hsl' ): deck
 
     slide
       | HSL
@@ -105,18 +106,30 @@ html
     script.
       angular
         .module('hsl', [])
-        .component('slide-deck', {
-          controller: class {
-            constructor() {
-              console.log('omg')
+        .component('deck', {
+          controller() {
+            this.index = 0
+            this.slides = []
+            
+            this.add = function(slide) {
+              slide.index(this.slides.length)
+              this.slides.push(slide)
             }
           }
         })
         .component('slide', {
-          require: '^slide-deck',
+          require: { deck: '^deck' },
           controller($element) {
             var html = marked($element.text())
             $element.html(html)
+            
+            this.$onInit = function() {
+              this.deck.add(this)
+            }
+            
+            this.index = function(index) {
+              $element.attr('id', index)
+            }
           }
         })
         .component('notes', {
