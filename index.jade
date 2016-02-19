@@ -102,19 +102,32 @@ html
       | - LABCIE
       
     script( src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js' )
+    script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js' )
     script( src='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js' )
     script.
       angular
         .module('hsl', [])
         .component('deck', {
-          controller() {
-            this.index = 0
+          controller($document) {
             this.slides = []
             
             this.add = function(slide) {
               slide.index(this.slides.length)
               this.slides.push(slide)
             }
+
+            $document.on('keydown', function(e) {
+              var index = +location.hash.slice(1) || 0
+              switch (e.keyIdentifier) {
+                case 'Right':
+                  index++
+                  break
+                case 'Left':
+                  index--
+                  break
+              }
+              location.hash = _.clamp(index, 0, this.slides.length)
+            }.bind(this))
           }
         })
         .component('slide', {
