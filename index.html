@@ -1,0 +1,59 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>HSL – The RGB You’ve Been Waiting For</title></head><body ng-app="hsl"><slide-deck><slide>HSL
+===
+ 
+The RGB You've Been Waiting For
+-------------------------------</slide><notes>This is a talk which I put together for the February 2016 PeninsulaJS
+meetup. It should be digestable as a web page on its own and
+interactive.</notes><slide>The Problem
+===========</slide><notes>- RGB + RGB = 🤔
+  - Demo: Adding and subtracting RGB colors
+- It's about adding *light* together
+  - Demo: RGB values next to each other and the color they make (zoom
+    in and out)
+- Conclusion: RGB is not cool</notes><slide>Let's make our own color space
+==============================</slide><notes>- "Color space" = a system to specify a color and reason about sets of
+  colors
+- Analogy with Cartesian coordinates and reasoning about space
+  - Demo: RGB as XYZ
+  - XYZ is an ok coordinate system, but starts failing if all you care
+    about is "How far are you from the origin?"
+- Task: Design a system to quickly specify a color (intuitively)
+  - How would you do that intuitively to the person sitting next to you?
+  - Ask an attendee to describe an arbitrary color in the room</notes><slide>Hue
+---</slide><slide>Saturation
+----------</slide><slide>Lightness
+---------</slide><slide>Putting it all together
+=======================</slide><notes>- Gamut
+- Transform from RGB</notes><slide>Let's do some stuff with HSL
+============================</slide><slide>Lighten a color
+---------------</slide><notes>- This is the original problem at the beginning</notes><slide>Grayscale a photo
+-----------------</slide><slide>Make a color palette
+--------------------</slide><slide>HSL is everywhere already
+=========================</slide><notes>- Chrome dev tools
+- Color pickers
+  - OS X
+  - Sketch
+  - Google slides
+- colorhexa.com</notes><slide>Problems
+========</slide><notes>- LABCIE</notes><script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script><script>angular
+  .module('hsl', [])
+  .component('slide-deck', {
+    controller: class {
+      constructor() {
+        console.log('omg')
+      }
+    }
+  })
+  .component('slide', {
+    require: '^slide-deck',
+    controller($element) {
+      var html = marked($element.text())
+      $element.html(html)
+    }
+  })
+  .component('notes', {
+    controller($element) {
+      var html = marked($element.text())
+      $element.html(html)
+    }
+  })</script></slide-deck></body></html>
