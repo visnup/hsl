@@ -14,3 +14,8 @@ slide {
   box-sizing: border-box;
   padding: 10rem;
 }
+
+notes {
+  display: block;
+  padding: 0 2rem;
+}
