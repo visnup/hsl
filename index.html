@@ -1,106 +1,84 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>HSL – The RGB You’ve Been Waiting For</title><link href="slides.css" rel="stylesheet" type="text/css"></head><body ng-app="hsl"><deck><slide>HSL
-===
- 
-The RGB You've Been Waiting For
--------------------------------</slide><notes>This is a talk put together for the February 2016 [PeninsulaJS][1]
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>HSL – The RGB You’ve Been Waiting For</title><link href="slides.css" rel="stylesheet" type="text/css"></head><body ng-app="hsl"><deck><slide><h1 id="hsl">HSL</h1>
+<h2 id="the-rgb-you-ve-been-waiting-for">The RGB You&#39;ve Been Waiting For</h2>
+</slide><notes><p>This is a talk put together for the February 2016 <a href="http://peninsulajs.com/">PeninsulaJS</a>
 meetup. It should be digestable as a web page on its own and
-interactive.
- 
-The source for these slides is available at
-[github.com/visnup/hsl][2].
- 
-[1]: http://peninsulajs.com/
-[2]: https://github.com/visnup/hsl</notes><slide>The Problem
-===========
- 
-<div ng-init='lhs=$root.RGB("ff","a5","00"); rhs=$root.RGB("33","33","33")'>
-<span class="swatch" ng-style="{backgroundColor: lhs}"></span>
-<input ng-model='lhs.r' placeholder='R' class='d' />
-<input ng-model='lhs.g' placeholder='G' class='d' />
-<input ng-model='lhs.b' placeholder='B' class='d' />
-+
-<span class="swatch" ng-style="{backgroundColor: rhs}"></span>
-<input ng-model='rhs.r' placeholder='R' class='d' />
-<input ng-model='rhs.g' placeholder='G' class='d' />
-<input ng-model='rhs.b' placeholder='B' class='d' />
-=
-<span class="swatch" ng-style="{backgroundColor: lhs.plus(rhs)}"></span>
-<input ng-model='lhs.plus(rhs).r' placeholder='R' class='d' readonly />
-<input ng-model='lhs.plus(rhs).g' placeholder='G' class='d' readonly />
-<input ng-model='lhs.plus(rhs).b' placeholder='B' class='d' readonly />
-</div></slide><notes>RGB + RGB = 🤔
---------------
-`#ffa500` -- that's orange. `#ffd833` -- that's not a lighter orange;
-it's yellow. _Of course_, you're thinking, _one does not simply add
-some GB to RGB to lighten a color_.
- 
-Ok fine, then how do you lighten orange to get light orange? And wait,
+interactive.</p>
+<p>The source for these slides is available at
+<a href="https://github.com/visnup/hsl">github.com/visnup/hsl</a>.</p>
+</notes><slide><h1 id="the-problem">The Problem</h1>
+<div ng-init="lhs=$root.RGB(&quot;ff&quot;,&quot;a5&quot;,&quot;00&quot;); rhs=$root.RGB(&quot;33&quot;,&quot;33&quot;,&quot;33&quot;)"><span ng-style="{backgroundColor: lhs}" class="swatch"></span><input ng-model="lhs.r" placeholder="R" class="d"><input ng-model="lhs.g" placeholder="G" class="d"><input ng-model="lhs.b" placeholder="B" class="d">+<span ng-style="{backgroundColor: rhs}" class="swatch"></span><input ng-model="rhs.r" placeholder="R" class="d"><input ng-model="rhs.g" placeholder="G" class="d"><input ng-model="rhs.b" placeholder="B" class="d">=<span ng-style="{backgroundColor: lhs.plus(rhs)}" class="swatch"></span><input ng-model="lhs.plus(rhs).r" placeholder="R" readonly class="d"><input ng-model="lhs.plus(rhs).g" placeholder="G" readonly class="d"><input ng-model="lhs.plus(rhs).b" placeholder="B" readonly class="d"></div></slide><notes><h2 id="rgb-rgb-">RGB + RGB = 🤔</h2>
+<p><code>#ffa500</code> -- that&#39;s orange. <code>#ffd833</code> -- that&#39;s not a lighter orange;
+it&#39;s yellow. <em>Of course</em>, you&#39;re thinking, <em>one does not simply add
+some GB to RGB to lighten a color</em>.</p>
+<p>Ok fine, then how do you lighten orange to get light orange? And wait,
 hold on: why can’t I just add Rs, Gs, and Bs to lighten my colors? I
-mean, my computer knows `1 + 1 = 2`; it and I can agree on that. Yet
-`#ffa500` + `#004999` yields some kinda related color, but in a way
-that doesn’t exactly make sense.
- 
-In what world is that cool? I'll tell you in what world: in an
+mean, my computer knows <code>1 + 1 = 2</code>; it and I can agree on that. Yet
+<code>#ffa500</code> + <code>#004999</code> yields some kinda related color, but in a way
+that doesn’t exactly make sense.</p>
+<p>In what world is that cool? I&#39;ll tell you in what world: in an
 adding-colors-of-light-together world. You know who lives in that
 world?  LEDs and CRTs, that’s who. And scientists who play with lasers,
-AKA crazy people.</notes><slide>RGB is for adding light together
-================================
- 
-<div ng-init='lhs=$root.RGB("ff","a5","00"); rhs=$root.RGB("33","33","33")'>
-<span class="swatch" ng-style="{backgroundColor: lhs}"></span>
-<input ng-model='lhs.r' placeholder='R' class='d' />
-<input ng-model='lhs.g' placeholder='G' class='d' />
-<input ng-model='lhs.b' placeholder='B' class='d' />
-+
-<span class="swatch" ng-style="{backgroundColor: rhs}"></span>
-<input ng-model='rhs.r' placeholder='R' class='d' />
-<input ng-model='rhs.g' placeholder='G' class='d' />
-<input ng-model='rhs.b' placeholder='B' class='d' />
-=
-<span class="swatch" ng-style="{backgroundColor: lhs.plus(rhs)}"></span>
-<input ng-model='lhs.plus(rhs).r' placeholder='R' class='d' readonly />
-<input ng-model='lhs.plus(rhs).g' placeholder='G' class='d' readonly />
-<input ng-model='lhs.plus(rhs).b' placeholder='B' class='d' readonly />
-</div></slide><notes>- Demo: RGB values next to each other and the color they make (zoom
-  in and out)
- 
-RGB is _not_ like some single origin, shade-grown, 1,300 meter
+AKA crazy people.</p>
+</notes><slide><h1 id="rgb-is-for-adding-light-together">RGB is for adding light together</h1>
+</slide><notes><ul>
+<li>Demo: RGB values next to each other and the color they make (zoom
+in and out)</li>
+</ul>
+<p>RGB is <em>not</em> like some single origin, shade-grown, 1,300 meter
 elevation coffee beans you found in Alajuela, Costa Rica and roasted in
-small batches to give to your friends in Oakland.
- 
-RGB _is_ like that guy in a North Face jacket and hoodie on the 38L
+small batches to give to your friends in Oakland.</p>
+<p>RGB <em>is</em> like that guy in a North Face jacket and hoodie on the 38L
 Geary headed downtown, doing a line of cocaine off his iPhone. Yeah,
-RGB is not a | so-uncool-it’s-cool-again thing.</notes><slide><img src="https://pbs.twimg.com/media/Ay25GrnCMAEgjyW.jpg" style="height: 50vh" />
- 
-Some guy doing lines of cocaine off his iphone on muni...  
--- Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></slide><slide>Let's make our own color space
-==============================</slide><notes>- "Color space" = a system to specify a color and reason about sets of
-  colors
-- Analogy with Cartesian coordinates and reasoning about space
-  - Demo: RGB as XYZ
-  - XYZ is an ok coordinate system, but starts failing if all you care
-    about is "How far are you from the origin?"
-- Task: Design a system to quickly specify a color (intuitively)
-  - How would you do that intuitively to the person sitting next to you?
-  - Ask an attendee to describe an arbitrary color in the room</notes><slide>Hue
----</slide><slide>Saturation
-----------</slide><slide>Lightness
----------</slide><slide>Putting it all together
-=======================</slide><notes>- Gamut
-- Transform from RGB</notes><slide>Let's do some stuff with HSL
-============================</slide><slide>Lighten a color
----------------</slide><notes>- This is the original problem at the beginning</notes><slide>Grayscale a photo
------------------</slide><slide>Make a color palette
---------------------</slide><slide>HSL is everywhere already
-=========================</slide><notes>- Chrome dev tools
-- Color pickers
-  - OS X
-  - Sketch
-  - Google slides
-- colorhexa.com</notes><slide>Problems
-========</slide><notes>- LABCIE</notes><script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script><script>'use strict'
-
-marked.setOptions({ smartypants: true })
+RGB is not a | so-uncool-it’s-cool-again thing.</p>
+</notes><slide><p><img src="https://pbs.twimg.com/media/Ay25GrnCMAEgjyW.jpg" style="height: 50vh" /></p>
+<p>Some guy doing lines of cocaine off his iphone on muni...<br>-- Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></p>
+</slide><slide><h1 id="let-s-make-our-own-color-space">Let&#39;s make our own color space</h1>
+</slide><notes><ul>
+<li>&quot;Color space&quot; = a system to specify a color and reason about sets of
+colors</li>
+<li>Analogy with Cartesian coordinates and reasoning about space<ul>
+<li>Demo: RGB as XYZ</li>
+<li>XYZ is an ok coordinate system, but starts failing if all you care
+about is &quot;How far are you from the origin?&quot;</li>
+</ul>
+</li>
+<li>Task: Design a system to quickly specify a color (intuitively)<ul>
+<li>How would you do that intuitively to the person sitting next to you?</li>
+<li>Ask an attendee to describe an arbitrary color in the room</li>
+</ul>
+</li>
+</ul>
+</notes><slide><h2 id="hue">Hue</h2>
+</slide><slide><h2 id="saturation">Saturation</h2>
+</slide><slide><h2 id="lightness">Lightness</h2>
+</slide><slide><h1 id="putting-it-all-together">Putting it all together</h1>
+</slide><notes><ul>
+<li>Gamut</li>
+<li>Transform from RGB</li>
+</ul>
+</notes><slide><h1 id="let-s-do-some-stuff-with-hsl">Let&#39;s do some stuff with HSL</h1>
+</slide><slide><h2 id="lighten-a-color">Lighten a color</h2>
+</slide><notes><ul>
+<li>This is the original problem at the beginning</li>
+</ul>
+</notes><slide><h2 id="grayscale-a-photo">Grayscale a photo</h2>
+</slide><slide><h2 id="make-a-color-palette">Make a color palette</h2>
+</slide><slide><h1 id="hsl-is-everywhere-already">HSL is everywhere already</h1>
+</slide><notes><ul>
+<li>Chrome dev tools</li>
+<li>Color pickers<ul>
+<li>OS X</li>
+<li>Sketch</li>
+<li>Google slides</li>
+</ul>
+</li>
+<li>colorhexa.com</li>
+</ul>
+</notes><slide><h1 id="problems">Problems</h1>
+</slide><notes><ul>
+<li>LABCIE</li>
+</ul>
+</notes><script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js"></script><script>'use strict'
 
 class RGB {
   constructor(r, g, b) {
@@ -156,10 +134,7 @@ angular
   })
   .component('slide', {
     require: { deck: '^deck' },
-    controller($scope, $element, $compile) {
-      var link = $compile(marked($element.html()))
-      $element.empty().append(link($scope))
-      
+    controller($element) {
       this.$onInit = function() {
         this.deck.add(this)
       }
@@ -167,11 +142,6 @@ angular
       this.index = function(index) {
         $element.attr('id', index)
       }
-    }
-  })
-  .component('notes', {
-    controller($element) {
-      $element.html(marked($element.text()))
     }
   })
   .run(function($rootScope) {
