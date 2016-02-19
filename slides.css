@@ -24,6 +24,10 @@ notes {
   margin: 0 auto;
 }
 
+input.d, .swatch {
+  margin: 0 5px;
+}
+
 input.d {
   width: 3rem;
   text-align: center;
@@ -34,4 +38,5 @@ input.d {
   width: 3rem;
   height: 3rem;
   vertical-align: middle;
+  border-radius: 1000px;
 }
