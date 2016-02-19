@@ -8,6 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "publish": "git checkout gh-pages; git merge master; jade index.jade; git commit -am 'publish'; git push; git checkout -",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
