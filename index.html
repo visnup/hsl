@@ -5,8 +5,8 @@ meetup. It should be digestable as a web page on its own and
 interactive.</p>
 <p>The source for these slides is available at
 <a href="https://github.com/visnup/hsl">github.com/visnup/hsl</a>.</p>
-</notes><slide><h1 id="the-problem">The Problem</h1>
-<div ng-init="lhs=$root.RGB(&quot;ff&quot;,&quot;a5&quot;,&quot;00&quot;); rhs=$root.RGB(&quot;33&quot;,&quot;33&quot;,&quot;33&quot;)"><span ng-style="{backgroundColor: lhs}" class="swatch"></span><input ng-model="lhs.r" placeholder="R" class="d"><input ng-model="lhs.g" placeholder="G" class="d"><input ng-model="lhs.b" placeholder="B" class="d">+<span ng-style="{backgroundColor: rhs}" class="swatch"></span><input ng-model="rhs.r" placeholder="R" class="d"><input ng-model="rhs.g" placeholder="G" class="d"><input ng-model="rhs.b" placeholder="B" class="d">=<span ng-style="{backgroundColor: lhs.plus(rhs)}" class="swatch"></span><input ng-model="lhs.plus(rhs).r" placeholder="R" readonly class="d"><input ng-model="lhs.plus(rhs).g" placeholder="G" readonly class="d"><input ng-model="lhs.plus(rhs).b" placeholder="B" readonly class="d"></div></slide><notes><h2 id="rgb-rgb-">RGB + RGB = 🤔</h2>
+</notes><slide class="xs-center"><h1 id="the-problem">The Problem</h1>
+<div ng-init="lhs=$root.RGB(&quot;ff&quot;,&quot;a5&quot;,&quot;00&quot;); rhs=$root.RGB(&quot;33&quot;,&quot;33&quot;,&quot;33&quot;)"><span ng-style="{backgroundColor: lhs}" class="swatch"></span><input ng-model="lhs.r" placeholder="R" ng-style="{borderBottomColor: lhs.rx}" class="c"><input ng-model="lhs.g" placeholder="G" ng-style="{borderBottomColor: lhs.gx}" class="c"><input ng-model="lhs.b" placeholder="B" ng-style="{borderBottomColor: lhs.bx}" class="c"><div class="op text-muted">+</div><span ng-style="{backgroundColor: rhs}" class="swatch"></span><input ng-model="rhs.r" placeholder="R" ng-style="{borderBottomColor: rhs.rx}" class="c"><input ng-model="rhs.g" placeholder="G" ng-style="{borderBottomColor: rhs.gx}" class="c"><input ng-model="rhs.b" placeholder="B" ng-style="{borderBottomColor: rhs.bx}" class="c"><div class="op text-muted">=</div><span ng-show="false">{{sum = lhs.plus(rhs)}}</span><span ng-style="{backgroundColor: sum}" class="swatch"></span><input ng-model="sum.r" placeholder="R" ng-style="{borderBottomColor: sum.rx}" readonly class="c"><input ng-model="sum.g" placeholder="G" ng-style="{borderBottomColor: sum.gx}" readonly class="c"><input ng-model="sum.b" placeholder="B" ng-style="{borderBottomColor: sum.bx}" readonly class="c"></div></slide><notes><h2 id="rgb-rgb-">RGB + RGB = 🤔</h2>
 <p><code>#ffa500</code> -- that&#39;s orange. <code>#ffd833</code> -- that&#39;s not a lighter orange;
 it&#39;s yellow. <em>Of course</em>, you&#39;re thinking, <em>one does not simply add
 some GB to RGB to lighten a color</em>.</p>
@@ -19,8 +19,8 @@ that doesn’t exactly make sense.</p>
 adding-colors-of-light-together world. You know who lives in that
 world?  LEDs and CRTs, that’s who. And scientists who play with lasers,
 AKA crazy people.</p>
-</notes><slide><h1 id="rgb-is-for-adding-light-together">RGB is for adding light together</h1>
-</slide><notes><ul>
+</notes><slide><h1 id="rgb-adding-lasers-together">RGB: adding lasers together</h1>
+<div ng-init="rgb=$root.RGB(&quot;ff&quot;,&quot;a5&quot;,&quot;00&quot;)"><span ng-style="{backgroundColor: rgb}" class="swatch"></span><input ng-model="rgb.r" placeholder="R" ng-style="{borderBottomColor: rgb.rx}" class="c"><input ng-model="rgb.g" placeholder="G" ng-style="{borderBottomColor: rgb.gx}" class="c"><input ng-model="rgb.b" placeholder="B" ng-style="{borderBottomColor: rgb.bx}" class="c"></div></slide><notes><ul>
 <li>Demo: RGB values next to each other and the color they make (zoom
 in and out)</li>
 </ul>
@@ -48,9 +48,17 @@ about is &quot;How far are you from the origin?&quot;</li>
 </ul>
 </li>
 </ul>
-</notes><slide><h2 id="hue">Hue</h2>
-</slide><slide><h2 id="saturation">Saturation</h2>
-</slide><slide><h2 id="lightness">Lightness</h2>
+<p>Let’s pretend we were tasked with representing all the colors in an
+intuitive way. How would we start? How about, let&#39;s just take the
+rainbow (ROY G. BIV!) and stick it in a kinda big array:</p>
+</notes><slide><h2 id="color-swatch-hue">Color / Swatch / Hue</h2>
+<div ng-init="buckets = 9" class="hue"><p>Let’s divide the rainbow up into <input type="number" ng-model="buckets" placeholder="#" class="c"> colors:</p><div style="display: flex; justify-content: space-between" class="hues"><span ng-style="{backgroundColor: $root.HSL(c*360/buckets, 100, 50)}" ng-repeat="c in $root._.range(0, buckets)" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2, 3]">{{c*buckets/3 | number}}</span></div></div></slide><notes><p>That&#39;s kinda intuitive-looking already. We&#39;ve got all of the colors our
+eyes can see in an array indexed from 0 to 100. So, if I want red I
+just grab the color at 0 and if I want magenta, I grab the one at 100.
+20ish is yellow and 50ish is cyan; it’s just a mapping and as we move
+up and down the scale we get a predictable color from the rainbow.</p>
+</notes><slide><h2 id="brightness-colorfulness-saturation">Brightness / Colorfulness / Saturation</h2>
+<div ng-init="hsl = $root.HSL(300, 100, 50)" class="saturation"><p>Given a hue of <span ng-style="{backgroundColor: $root.HSL(hsl.h, 100, 50)}" class="swatch"></span><input ng-model="hsl.h" placeholder="H" ng-style="{borderBottomColor: $root.HSL(hsl.h, 100, 50)}" class="c">,</p><div style="display: flex; justify-content: space-between" class="hues"><span ng-style="{backgroundColor: $root.HSL(c, hsl.s, hsl.l)}" ng-repeat="c in $root._.range(0, 360)" ng-mouseenter="hsl.h = c" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2, 3]">{{c*360/3 | number}}</span></div><p>let’s remove <b>colorfulness</b> from it on a scale from 0 to 100:</p><div style="display: flex; justify-content: space-between" class="saturations"><span ng-style="{backgroundColor: $root.HSL(hsl.h, s, hsl.l)}" ng-repeat="s in $root._.range(0, 100)" ng-click="hsl.s = s" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2]">{{c*100/2 | number}}</span></div></div></slide><slide><h2 id="lightness">Lightness</h2>
 </slide><slide><h1 id="putting-it-all-together">Putting it all together</h1>
 </slide><notes><ul>
 <li>Gamut</li>
@@ -87,22 +95,39 @@ class RGB {
     this.b = b
   }
 
-  get r() { return this._r }
-  set r(r) { this.__r = parseInt(this._r = r, 16) }
-  get g() { return this._g }
-  set g(g) { this.__g = parseInt(this._g = g, 16) }
-  get b() { return this._b }
-  set b(b) { this.__b = parseInt(this._b = b, 16) }
+  set r(r) { this._r = parseInt(r || 0, 16) }
+  set g(g) { this._g = parseInt(g || 0, 16) }
+  set b(b) { this._b = parseInt(b || 0, 16) }
+
+  get r()  { return this._r.toString(16) }
+  get g()  { return this._g.toString(16) }
+  get b()  { return this._b.toString(16) }
+
+  get rx() { return new RGB(this._r, 0, 0) }
+  get gx() { return new RGB(0, this._g, 0) }
+  get bx() { return new RGB(0, 0, this._b) }
 
   plus(other) {
-    var r = _.clamp(this.__r + other.__r, 0, 255),
-        g = _.clamp(this.__g + other.__g, 0, 255),
-        b = _.clamp(this.__b + other.__b, 0, 255)
+    var r = _.clamp(this._r + other._r, 0, 255),
+        g = _.clamp(this._g + other._g, 0, 255),
+        b = _.clamp(this._b + other._b, 0, 255)
     return new RGB(r.toString(16), g.toString(16), b.toString(16))
   }
 
   toString() {
-    return `rgb(${this.__r},${this.__g},${this.__b})`
+    return `rgb(${this._r},${this._g},${this._b})`
+  }
+}
+
+class HSL {
+  constructor(h, s, l) {
+    this.h = h
+    this.s = s
+    this.l = l
+  }
+
+  toString() {
+    return `hsl(${this.h},${this.s}%,${this.l}%)`
   }
 }
 
@@ -134,7 +159,7 @@ angular
   })
   .component('slide', {
     require: { deck: '^deck' },
-    controller($element) {
+    controller($scope, $element) {
       this.$onInit = function() {
         this.deck.add(this)
       }
@@ -145,5 +170,7 @@ angular
     }
   })
   .run(function($rootScope) {
+    $rootScope._ = _
     $rootScope.RGB = function(r, g, b) { return new RGB(r, g, b) }
+    $rootScope.HSL = function(h, s, l) { return new HSL(h, s, l) }
   })</script></deck></body></html>
