@@ -11,7 +11,7 @@
   "scripts": {
     "start": "jade --watch index.jade",
     "prepublish": "jade index.jade",
-    "test": "git checkout gh-pages && git pull && git merge master && npm install && (git diff-files --quiet || git commit -am 'publish') && git push && git checkout -"
+    "test": "git checkout gh-pages && git pull && git merge master && npm install && (git diff-index --quiet HEAD || git commit -am publish) && git push && git checkout -"
   },
   "author": "",
   "license": "ISC"
