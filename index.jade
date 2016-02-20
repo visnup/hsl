@@ -27,26 +27,27 @@ html
         [1]: http://peninsulajs.com/
         [2]: https://github.com/visnup/hsl
 
-    slide
+    slide.xs-center
       :marked
         The Problem
         ===========
 
       div( ng-init='lhs=$root.RGB("ff","a5","00"); rhs=$root.RGB("33","33","33")' )
         span.swatch( ng-style="{backgroundColor: lhs}" )
-        input.d( ng-model='lhs.r' placeholder='R' )
-        input.d( ng-model='lhs.g' placeholder='G' )
-        input.d( ng-model='lhs.b' placeholder='B' )
-        | +
+        input.c( ng-model='lhs.r' placeholder='R' ng-style='{borderBottomColor: lhs.rx}' )
+        input.c( ng-model='lhs.g' placeholder='G' ng-style='{borderBottomColor: lhs.gx}' )
+        input.c( ng-model='lhs.b' placeholder='B' ng-style='{borderBottomColor: lhs.bx}' )
+        .op.text-muted +
         span.swatch( ng-style="{backgroundColor: rhs}" )
-        input.d( ng-model='rhs.r' placeholder='R' )
-        input.d( ng-model='rhs.g' placeholder='G' )
-        input.d( ng-model='rhs.b' placeholder='B' )
-        | =
-        span.swatch( ng-style="{backgroundColor: lhs.plus(rhs)}" )
-        input.d( ng-model='lhs.plus(rhs).r' placeholder='R' readonly )
-        input.d( ng-model='lhs.plus(rhs).g' placeholder='G' readonly )
-        input.d( ng-model='lhs.plus(rhs).b' placeholder='B' readonly )
+        input.c( ng-model='rhs.r' placeholder='R' ng-style='{borderBottomColor: rhs.rx}' )
+        input.c( ng-model='rhs.g' placeholder='G' ng-style='{borderBottomColor: rhs.gx}' )
+        input.c( ng-model='rhs.b' placeholder='B' ng-style='{borderBottomColor: rhs.bx}' )
+        .op.text-muted =
+        span( ng-show='false' ) {{sum = lhs.plus(rhs)}}
+        span.swatch( ng-style="{backgroundColor: sum}" )
+        input.c( ng-model='sum.r' placeholder='R' ng-style='{borderBottomColor: sum.rx}' readonly )
+        input.c( ng-model='sum.g' placeholder='G' ng-style='{borderBottomColor: sum.gx}' readonly )
+        input.c( ng-model='sum.b' placeholder='B' ng-style='{borderBottomColor: sum.bx}' readonly )
 
     notes
       :marked
@@ -69,8 +70,14 @@ html
 
     slide
       :marked
-        RGB is for adding light together
-        ================================
+        RGB: adding lasers together
+        ===========================
+
+      div( ng-init='rgb=$root.RGB("ff","a5","00")' )
+        span.swatch( ng-style="{backgroundColor: rgb}" )
+        input.c( ng-model='rgb.r' placeholder='R' ng-style='{borderBottomColor: rgb.rx}' )
+        input.c( ng-model='rgb.g' placeholder='G' ng-style='{borderBottomColor: rgb.gx}' )
+        input.c( ng-model='rgb.b' placeholder='B' ng-style='{borderBottomColor: rgb.bx}' )
 
     notes
       :marked
@@ -107,17 +114,65 @@ html
         - Task: Design a system to quickly specify a color (intuitively)
           - How would you do that intuitively to the person sitting next to you?
           - Ask an attendee to describe an arbitrary color in the room
+
+        Let’s pretend we were tasked with representing all the colors in an
+        intuitive way. How would we start? How about, let's just take the
+        rainbow (ROY G. BIV!) and stick it in a kinda big array:
       
     slide
       :marked
-        Hue
-        ---
-      
+        Color / Swatch / Hue
+        --------------------
+
+      .hue( ng-init='buckets = 9' )
+        p Let’s divide the rainbow up into 
+          input.c( type='number' ng-model='buckets' placeholder='#' )
+          |  colors:
+
+        .hues( style='display: flex; justify-content: space-between' )
+          span.swatch(
+            ng-style="{backgroundColor: $root.HSL(c*360/buckets, 100, 50)}"
+            ng-repeat='c in $root._.range(0, buckets)' )
+        .indexes( style='display: flex; justify-content: space-between' )
+          span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*buckets/3 | number}}
+
+    notes
+      :marked
+        That's kinda intuitive-looking already. We've got all of the colors our
+        eyes can see in an array indexed from 0 to 100. So, if I want red I
+        just grab the color at 0 and if I want magenta, I grab the one at 100.
+        20ish is yellow and 50ish is cyan; it’s just a mapping and as we move
+        up and down the scale we get a predictable color from the rainbow.
+
     slide
       :marked
-        Saturation
-        ----------
-      
+        Brightness / Colorfulness / Saturation
+        --------------------------------------
+
+      .saturation( ng-init='hsl = $root.HSL(300, 100, 50)' )
+        p Given a hue of 
+          span.swatch( ng-style='{backgroundColor: $root.HSL(hsl.h, 100, 50)}' )
+          input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: $root.HSL(hsl.h, 100, 50)}' )
+          | ,
+
+        .hues( style='display: flex; justify-content: space-between' )
+          span.swatch(
+            ng-style="{backgroundColor: $root.HSL(c, hsl.s, hsl.l)}"
+            ng-repeat='c in $root._.range(0, 360)'
+            ng-mouseenter='hsl.h = c' )
+        .indexes( style='display: flex; justify-content: space-between' )
+          span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
+
+        p let’s remove <b>colorfulness</b> from it on a scale from 0 to 100:
+
+        .saturations( style='display: flex; justify-content: space-between' )
+          span.swatch(
+            ng-style="{backgroundColor: $root.HSL(hsl.h, s, hsl.l)}"
+            ng-repeat='s in $root._.range(0, 100)'
+            ng-click='hsl.s = s' )
+        .indexes( style='display: flex; justify-content: space-between' )
+          span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+
     slide
       :marked
         Lightness
@@ -188,22 +243,39 @@ html
           this.b = b
         }
 
-        get r() { return this._r }
-        set r(r) { this.__r = parseInt(this._r = r, 16) }
-        get g() { return this._g }
-        set g(g) { this.__g = parseInt(this._g = g, 16) }
-        get b() { return this._b }
-        set b(b) { this.__b = parseInt(this._b = b, 16) }
+        set r(r) { this._r = parseInt(r || 0, 16) }
+        set g(g) { this._g = parseInt(g || 0, 16) }
+        set b(b) { this._b = parseInt(b || 0, 16) }
+
+        get r()  { return this._r.toString(16) }
+        get g()  { return this._g.toString(16) }
+        get b()  { return this._b.toString(16) }
+
+        get rx() { return new RGB(this._r, 0, 0) }
+        get gx() { return new RGB(0, this._g, 0) }
+        get bx() { return new RGB(0, 0, this._b) }
 
         plus(other) {
-          var r = _.clamp(this.__r + other.__r, 0, 255),
-              g = _.clamp(this.__g + other.__g, 0, 255),
-              b = _.clamp(this.__b + other.__b, 0, 255)
+          var r = _.clamp(this._r + other._r, 0, 255),
+              g = _.clamp(this._g + other._g, 0, 255),
+              b = _.clamp(this._b + other._b, 0, 255)
           return new RGB(r.toString(16), g.toString(16), b.toString(16))
         }
 
         toString() {
-          return `rgb(${this.__r},${this.__g},${this.__b})`
+          return `rgb(${this._r},${this._g},${this._b})`
+        }
+      }
+
+      class HSL {
+        constructor(h, s, l) {
+          this.h = h
+          this.s = s
+          this.l = l
+        }
+
+        toString() {
+          return `hsl(${this.h},${this.s}%,${this.l}%)`
         }
       }
 
@@ -235,7 +307,7 @@ html
         })
         .component('slide', {
           require: { deck: '^deck' },
-          controller($element) {
+          controller($scope, $element) {
             this.$onInit = function() {
               this.deck.add(this)
             }
@@ -246,5 +318,7 @@ html
           }
         })
         .run(function($rootScope) {
+          $rootScope._ = _
           $rootScope.RGB = function(r, g, b) { return new RGB(r, g, b) }
+          $rootScope.HSL = function(h, s, l) { return new HSL(h, s, l) }
         })

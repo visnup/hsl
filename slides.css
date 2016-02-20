@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Catamaran);
 
 body, input {
-  font: xx-large 'Catamaran', sans-serif;
+  font: x-large 'Catamaran', sans-serif;
 }
 
 body {
@@ -9,28 +9,40 @@ body {
   margin: 0;
 }
 
+.text-muted {
+  font-size: large;
+  opacity: .5;
+}
+
+slide, notes {
+  display: block;
+  box-sizing: border-box;
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 slide {
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
-  box-sizing: border-box;
-  padding: 1rem 10rem;
-}
-
-notes {
-  display: block;
   max-width: 50rem;
   margin: 0 auto;
 }
 
-input.d, .swatch {
-  margin: 0 5px;
+slide.xs-center {
+  align-items: center;
+}
+slide.xs-center > * {
+  text-align: center;
 }
 
-input.d {
+input.c {
   width: 3rem;
   text-align: center;
+  border: none;
+  border-bottom: solid 5px black;
 }
 
 .swatch {
@@ -39,4 +51,8 @@ input.d {
   height: 3rem;
   vertical-align: middle;
   border-radius: 1000px;
+}
+
+.op {
+  padding-left: 3rem;
 }
