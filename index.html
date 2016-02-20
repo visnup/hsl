@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>HSL – The RGB You’ve Been Waiting For</title><link href="slides.css" rel="stylesheet" type="text/css"></head><body ng-app="hsl"><deck><slide><h1 id="hsl">HSL</h1>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,user-scalable=no"><title>HSL – The RGB You’ve Been Waiting For</title><link href="slides.css" rel="stylesheet" type="text/css"></head><body ng-app="hsl"><deck><slide><h1 id="hsl">HSL</h1>
 <h2 id="the-rgb-you-ve-been-waiting-for">The RGB You&#39;ve Been Waiting For</h2>
 </slide><notes><p>This is a talk put together for the February 2016 <a href="http://peninsulajs.com/">PeninsulaJS</a>
 meetup. It should be digestable as a web page on its own and
@@ -52,7 +52,7 @@ about is &quot;How far are you from the origin?&quot;</li>
 intuitive way. How would we start? How about, let&#39;s just take the
 rainbow (ROY G. BIV!) and stick it in a kinda big array:</p>
 </notes><slide><h2 id="color-swatch-hue">Color / Swatch / Hue</h2>
-<div ng-init="buckets = 9" class="hue"><p>Let’s divide the rainbow up into <input type="number" ng-model="buckets" placeholder="#" class="c"> colors:</p><div style="display: flex; justify-content: space-between" class="hues"><span ng-style="{backgroundColor: $root.HSL(c*360/buckets, 100, 50)}" ng-repeat="c in $root._.range(0, buckets)" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2, 3]">{{c*buckets/3 | number}}</span></div></div></slide><notes><p>That&#39;s kinda intuitive-looking already. We&#39;ve got all of the colors our
+<div ng-init="buckets = 9" class="hue"><p>Let’s divide the rainbow up into <input type="number" step="3" ng-model="buckets" placeholder="#" class="c"> colors:</p><div style="display: flex; justify-content: space-between" class="hues"><span ng-style="{backgroundColor: $root.HSL(c*360/buckets, 100, 50)}" ng-repeat="c in $root._.range(0, buckets)" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2, 3]">{{c*buckets/3 | number}}</span></div></div></slide><notes><p>That&#39;s kinda intuitive-looking already. We&#39;ve got all of the colors our
 eyes can see in an array indexed from 0 to 100. So, if I want red I
 just grab the color at 0 and if I want magenta, I grab the one at 100.
 20ish is yellow and 50ish is cyan; it’s just a mapping and as we move
