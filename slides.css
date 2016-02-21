@@ -9,6 +9,10 @@ body {
   margin: 0;
 }
 
+a {
+  color: hsl(200, 100%, 50%);
+}
+
 .text-muted {
   font-size: large;
   opacity: .5;
