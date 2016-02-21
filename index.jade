@@ -17,8 +17,7 @@ html
 
     notes: :marked( smartypants )
       This is a talk put together for the February 2016 [PeninsulaJS][1]
-      meetup. It should be digestable as a web page on its own and
-      interactive.
+      meetup.
 
       The source for these slides is available at
       [github.com/visnup/hsl][2].
@@ -135,14 +134,19 @@ html
 
       - Communicate to another person what color we want
       - Perform some common tasks on those colors
+      - Intuitive
+
     notes: :marked( smartypants )
-      - Task: Design a system to quickly specify a color (intuitively)
-        - How would you do that intuitively to the person sitting next to you?
-        - Ask an attendee to describe an arbitrary color in the room
+      How would you describe _to the person next to you_ the color of the <span
+      style="background: skyblue">sky</span>? How would you compare that to the
+      color of the <span style="background: aquamarine">ocean</span>? How would
+      you compare those colors to each other?
 
       Let’s pretend we were tasked with representing all the colors in an
-      intuitive way. How would we start? How about, let's just take the
-      rainbow (ROY G. BIV!) and stick it in a kinda big array:
+      _intuitive_ way. How would we start?
+
+      How about, let's just take the rainbow (**ROY G. BIV!**) and stick it in
+      a kinda big array:
       
     slide
       :marked( smartypants )
@@ -190,7 +194,7 @@ html
         p a hue of 
           span.swatch( ng-style='{backgroundColor: $root.HSL(hsl.h, 100, 50)}' )
           input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: $root.HSL(hsl.h, 100, 50)}' )
-          | , let’s bucket <b>colorfulness</b> of it on a scale from 0 to 
+          | , let’s bucket its <b>colorfulness</b> on a scale from 0 to 
           input.c( ng-model='buckets.s' type='number' step=10 )
           | :
 
@@ -258,7 +262,21 @@ html
         ========
     notes
       :marked( smartypants )
-        - LABCIE
+        So, I know I just told you HSL was like the new Kanye album, but there
+        are some problems with HSL.
+
+        Luckily, there are some people who _really care_ about this type of
+        stuff. They call themselves the **International Commission on
+        Illumination** or if you like French, **Commission internationale de
+        l'éclairage**, or if you think that's a mouthful, **CIE** for short.
+
+        They've published an _even better_ color space definition that takes
+        into account how the human eye perceives color along with what
+        lighting conditions you're in and how long you've been fermenting
+        that kombucha you're drinking. It's called LABCIE and it's _crazy_.
+
+        - Lightness
+        - Perceptual uniformity
       
     script( src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js' )
     script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js' )
