@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,user-scalable=no"><title>HSL – The RGB You’ve Been Waiting For</title><link href="slides.css" rel="stylesheet" type="text/css"></head><body ng-app="hsl"><deck><slide><h1 id="hsl">HSL</h1>
-<h2 id="the-rgb-you-ve-been-waiting-for">The RGB You&#39;ve Been Waiting For</h2>
+<h2 id="the-rgb-you-ve-been-waiting-for">The RGB You’ve Been Waiting For</h2>
 </slide><notes><p>This is a talk put together for the February 2016 <a href="http://peninsulajs.com/">PeninsulaJS</a>
 meetup. It should be digestable as a web page on its own and
 interactive.</p>
@@ -7,15 +7,15 @@ interactive.</p>
 <a href="https://github.com/visnup/hsl">github.com/visnup/hsl</a>.</p>
 </notes><slide class="xs-center"><h1 id="the-problem">The Problem</h1>
 <div ng-init="lhs=$root.RGB(&quot;ff&quot;,&quot;a5&quot;,&quot;00&quot;); rhs=$root.RGB(&quot;33&quot;,&quot;33&quot;,&quot;33&quot;)"><span ng-style="{backgroundColor: lhs}" class="swatch"></span><input ng-model="lhs.r" placeholder="R" ng-style="{borderBottomColor: lhs.rx}" class="c"><input ng-model="lhs.g" placeholder="G" ng-style="{borderBottomColor: lhs.gx}" class="c"><input ng-model="lhs.b" placeholder="B" ng-style="{borderBottomColor: lhs.bx}" class="c"><div class="op text-muted">+</div><span ng-style="{backgroundColor: rhs}" class="swatch"></span><input ng-model="rhs.r" placeholder="R" ng-style="{borderBottomColor: rhs.rx}" class="c"><input ng-model="rhs.g" placeholder="G" ng-style="{borderBottomColor: rhs.gx}" class="c"><input ng-model="rhs.b" placeholder="B" ng-style="{borderBottomColor: rhs.bx}" class="c"><div class="op text-muted">=</div><span ng-show="false">{{sum = lhs.plus(rhs)}}</span><span ng-style="{backgroundColor: sum}" class="swatch"></span><input ng-model="sum.r" placeholder="R" ng-style="{borderBottomColor: sum.rx}" readonly class="c"><input ng-model="sum.g" placeholder="G" ng-style="{borderBottomColor: sum.gx}" readonly class="c"><input ng-model="sum.b" placeholder="B" ng-style="{borderBottomColor: sum.bx}" readonly class="c"></div></slide><notes><h2 id="rgb-rgb-">RGB + RGB = 🤔</h2>
-<p><code>#ffa500</code> -- that&#39;s orange. <code>#ffd833</code> -- that&#39;s not a lighter orange;
-it&#39;s yellow. <em>Of course</em>, you&#39;re thinking, <em>one does not simply add
+<p><code>#ffa500</code> – that’s orange. <code>#ffd833</code> – that’s not a lighter orange;
+it’s yellow. <em>Of course</em>, you’re thinking, <em>one does not simply add
 some GB to RGB to lighten a color</em>.</p>
 <p>Ok fine, then how do you lighten orange to get light orange? And wait,
 hold on: why can’t I just add Rs, Gs, and Bs to lighten my colors? I
 mean, my computer knows <code>1 + 1 = 2</code>; it and I can agree on that. Yet
 <code>#ffa500</code> + <code>#004999</code> yields some kinda related color, but in a way
 that doesn’t exactly make sense.</p>
-<p>In what world is that cool? I&#39;ll tell you in what world: in an
+<p>In what world is that cool? I’ll tell you in what world: in an
 adding-colors-of-light-together world. You know who lives in that
 world?  LEDs and CRTs, that’s who. And scientists who play with lasers,
 AKA crazy people.</p>
@@ -29,19 +29,34 @@ elevation coffee beans you found in Alajuela, Costa Rica and roasted in
 small batches to give to your friends in Oakland.</p>
 <p>RGB <em>is</em> like that guy in a North Face jacket and hoodie on the 38L
 Geary headed downtown, doing a line of cocaine off his iPhone. Yeah,
-RGB is not a | so-uncool-it’s-cool-again thing.</p>
-</notes><slide><p><img src="https://pbs.twimg.com/media/Ay25GrnCMAEgjyW.jpg" style="height: 50vh" /></p>
-<p>Some guy doing lines of cocaine off his iphone on muni...<br>-- Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></p>
-</slide><slide><h1 id="let-s-make-our-own-color-space">Let&#39;s make our own color space</h1>
-</slide><notes><ul>
-<li>&quot;Color space&quot; = a system to specify a color and reason about sets of
-colors</li>
-<li>Analogy with Cartesian coordinates and reasoning about space<ul>
-<li>Demo: RGB as XYZ</li>
-<li>XYZ is an ok coordinate system, but starts failing if all you care
-about is &quot;How far are you from the origin?&quot;</li>
+RGB is not a “so-uncool-it’s-cool-again” thing.</p>
+</notes><slide><div style="display: flex; text-align: center" class="cool-not-cool"><div><h3>Probably still cool</h3><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote></div>&nbsp;<div><h3>Not cool</h3><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div></div></slide><slide><h1 id="rgb-is-a-color-space">RGB is a color space</h1>
+<p>[cool R, G, B = X, Y, Z thing]</p>
+</slide><notes><p>RGB is what we call a <strong>color space</strong>, which sounds more scary than it
+really is. I’d define a color space as “a system to specify a color and
+reason about sets of colors.”</p>
+<p>It’s actually really similar to the <strong>Cartesian X, Y, Z</strong> system to
+specify positions in… <em>space</em>. So, just like I can say the corner of
+the room is <code>{ 0, 0, 0 }</code> and to get to me, you go 20’ along that wall
+and 10’ along this other wall, and then another 5’8” upwards to get to
+my head, we can do the same thing with color. Instead of X, Y, and Z,
+we use R, G, and B.</p>
+<p>But what about the case where all I care about is answering “how far
+away you are from me and in what direction?” If we’re constrainted to
+XYZ, I have to go back to that corner and figure out your position and
+then do some vector math to find the distance and angle. </p>
+<p>And that’s where <strong>polar coordinates</strong> come from (if you remember that
+mind-blowing 6th grade geometry class). It’s just a different way of
+specifying all the same positions that you could with X,Y, and Z, but
+re-frames it in a totally different system. And when we shift our
+perspective that way, some operations become a <em>lot simpler</em> and <em>more
+intuitive</em>.</p>
+</notes><slide><h1 id="let-s-make-our-own-color-space">Let’s make our own color space</h1>
+<ul>
+<li>Communicate to another person what color we want</li>
+<li>Perform some common tasks on those colors</li>
 </ul>
-</li>
+</slide><notes><ul>
 <li>Task: Design a system to quickly specify a color (intuitively)<ul>
 <li>How would you do that intuitively to the person sitting next to you?</li>
 <li>Ask an attendee to describe an arbitrary color in the room</li>
@@ -49,10 +64,10 @@ about is &quot;How far are you from the origin?&quot;</li>
 </li>
 </ul>
 <p>Let’s pretend we were tasked with representing all the colors in an
-intuitive way. How would we start? How about, let&#39;s just take the
+intuitive way. How would we start? How about, let’s just take the
 rainbow (ROY G. BIV!) and stick it in a kinda big array:</p>
 </notes><slide><h2 id="color-swatch-hue">Color / Swatch / Hue</h2>
-<div ng-init="buckets = 9" class="hue"><p>Let’s divide the rainbow up into <input type="number" step="3" ng-model="buckets" placeholder="#" class="c"> colors:</p><div style="display: flex; justify-content: space-between" class="hues"><span ng-style="{backgroundColor: $root.HSL(c*360/buckets, 100, 50)}" ng-repeat="c in $root._.range(0, buckets)" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2, 3]">{{c*buckets/3 | number}}</span></div></div></slide><notes><p>That&#39;s kinda intuitive-looking already. We&#39;ve got all of the colors our
+<div ng-init="buckets = 9" class="hue"><p>Let’s divide the rainbow up into <input type="number" step="3" ng-model="buckets" placeholder="#" class="c"> colors:</p><div style="display: flex; justify-content: space-between" class="hues"><span ng-style="{backgroundColor: $root.HSL(c*360/buckets, 100, 50)}" ng-repeat="c in $root._.range(0, buckets)" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2, 3]">{{c*buckets/3 | number}}</span></div></div></slide><notes><p>That’s kinda intuitive-looking already. We’ve got all of the colors our
 eyes can see in an array indexed from 0 to 100. So, if I want red I
 just grab the color at 0 and if I want magenta, I grab the one at 100.
 20ish is yellow and 50ish is cyan; it’s just a mapping and as we move
@@ -64,7 +79,7 @@ up and down the scale we get a predictable color from the rainbow.</p>
 <li>Gamut</li>
 <li>Transform from RGB</li>
 </ul>
-</notes><slide><h1 id="let-s-do-some-stuff-with-hsl">Let&#39;s do some stuff with HSL</h1>
+</notes><slide><h1 id="let-s-do-some-stuff-with-hsl">Let’s do some stuff with HSL</h1>
 </slide><slide><h2 id="lighten-a-color">Lighten a color</h2>
 </slide><notes><ul>
 <li>This is the original problem at the beginning</li>
