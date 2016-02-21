@@ -1,8 +1,7 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,user-scalable=no"><title>HSL – The RGB You’ve Been Waiting For</title><link href="slides.css" rel="stylesheet" type="text/css"></head><body ng-app="hsl"><deck><slide><h1 id="hsl">HSL</h1>
 <h2 id="the-rgb-you-ve-been-waiting-for">The RGB You’ve Been Waiting For</h2>
 </slide><notes><p>This is a talk put together for the February 2016 <a href="http://peninsulajs.com/">PeninsulaJS</a>
-meetup. It should be digestable as a web page on its own and
-interactive.</p>
+meetup.</p>
 <p>The source for these slides is available at
 <a href="https://github.com/visnup/hsl">github.com/visnup/hsl</a>.</p>
 </notes><slide class="xs-center"><h1 id="the-problem">The Problem</h1>
@@ -55,17 +54,16 @@ intuitive</em>.</p>
 <ul>
 <li>Communicate to another person what color we want</li>
 <li>Perform some common tasks on those colors</li>
+<li>Intuitive</li>
 </ul>
-</slide><notes><ul>
-<li>Task: Design a system to quickly specify a color (intuitively)<ul>
-<li>How would you do that intuitively to the person sitting next to you?</li>
-<li>Ask an attendee to describe an arbitrary color in the room</li>
-</ul>
-</li>
-</ul>
+</slide><notes><p>How would you describe <em>to the person next to you</em> the color of the <span
+style="background: skyblue">sky</span>? How would you compare that to the
+color of the <span style="background: aquamarine">ocean</span>? How would
+you compare those colors to each other?</p>
 <p>Let’s pretend we were tasked with representing all the colors in an
-intuitive way. How would we start? How about, let’s just take the
-rainbow (ROY G. BIV!) and stick it in a kinda big array:</p>
+<em>intuitive</em> way. How would we start?</p>
+<p>How about, let’s just take the rainbow (<strong>ROY G. BIV!</strong>) and stick it in
+a kinda big array:</p>
 </notes><slide><h2 id="color-swatch-hue">Color / Swatch / Hue</h2>
 <div ng-init="buckets.h = 9" class="hue"><p>Let’s divide the rainbow up into <input ng-model="buckets.h" type="number" step="3" class="c"> colors:</p><div style="display: flex; justify-content: space-between" class="hues"><span ng-style="{backgroundColor: $root.HSL(c*360/buckets.h, 100, 50)}" ng-repeat="c in $root._.range(0, buckets.h)" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2, 3]">{{c*buckets.h/3 | number}}</span></div></div></slide><notes><p>That’s kinda intuitive-looking already. We’ve got lots of the colors we
 care about in an array indexed from 0 to {{buckets.h}}. So, if I want red
@@ -76,7 +74,7 @@ predictable color from the rainbow.</p>
 <p>We want to have more crayons in our box though, so increase that number
 to something high, like 99. Now we’re getting a proper rainbow.</p>
 </notes><slide><h2 id="brightness-colorfulness-saturation">Brightness / Colorfulness / Saturation</h2>
-<div ng-init="hsl = $root.HSL(300, 100, 50); buckets.s = 10" class="saturation"><p>Picking from our rainbow,</p><div style="display: flex; justify-content: space-between" class="hues"><span ng-style="{backgroundColor: $root.HSL(c, hsl.s, hsl.l)}" ng-repeat="c in $root._.range(0, 360)" ng-mouseenter="hsl.h = c" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2, 3]">{{c*360/3 | number}}</span></div><p>a hue of <span ng-style="{backgroundColor: $root.HSL(hsl.h, 100, 50)}" class="swatch"></span><input ng-model="hsl.h" placeholder="H" ng-style="{borderBottomColor: $root.HSL(hsl.h, 100, 50)}" class="c">, let’s bucket <b>colorfulness</b> of it on a scale from 0 to <input ng-model="buckets.s" type="number" step="10" class="c">:</p><div style="display: flex; justify-content: space-between" class="saturations"><span ng-style="{backgroundColor: $root.HSL(hsl.h, s*100/buckets.s, hsl.l)}" ng-repeat="s in $root._.range(0, buckets.s)" ng-click="hsl.s = s" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2]">{{c*buckets.s/2 | number}}</span></div></div></slide><slide><h2 id="lightness">Lightness</h2>
+<div ng-init="hsl = $root.HSL(300, 100, 50); buckets.s = 10" class="saturation"><p>Picking from our rainbow,</p><div style="display: flex; justify-content: space-between" class="hues"><span ng-style="{backgroundColor: $root.HSL(c, hsl.s, hsl.l)}" ng-repeat="c in $root._.range(0, 360)" ng-mouseenter="hsl.h = c" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2, 3]">{{c*360/3 | number}}</span></div><p>a hue of <span ng-style="{backgroundColor: $root.HSL(hsl.h, 100, 50)}" class="swatch"></span><input ng-model="hsl.h" placeholder="H" ng-style="{borderBottomColor: $root.HSL(hsl.h, 100, 50)}" class="c">, let’s bucket its <b>colorfulness</b> on a scale from 0 to <input ng-model="buckets.s" type="number" step="10" class="c">:</p><div style="display: flex; justify-content: space-between" class="saturations"><span ng-style="{backgroundColor: $root.HSL(hsl.h, s*100/buckets.s, hsl.l)}" ng-repeat="s in $root._.range(0, buckets.s)" ng-click="hsl.s = s" class="swatch"></span></div><div style="display: flex; justify-content: space-between" class="indexes"><span ng-repeat="c in [0, 1, 2]">{{c*buckets.s/2 | number}}</span></div></div></slide><slide><h2 id="lightness">Lightness</h2>
 </slide><slide><h1 id="putting-it-all-together">Putting it all together</h1>
 </slide><notes><ul>
 <li>Gamut</li>
@@ -101,8 +99,19 @@ to something high, like 99. Now we’re getting a proper rainbow.</p>
 <li>colorhexa.com</li>
 </ul>
 </notes><slide><h1 id="problems">Problems</h1>
-</slide><notes><ul>
-<li>LABCIE</li>
+</slide><notes><p>So, I know I just told you HSL was like the new Kanye album, but there
+are some problems with HSL.</p>
+<p>Luckily, there are some people who <em>really care</em> about this type of
+stuff. They call themselves the <strong>International Commission on
+Illumination</strong> or if you like French, <strong>Commission internationale de
+l’éclairage</strong>, or if you think that’s a mouthful, <strong>CIE</strong> for short.</p>
+<p>They’ve published an <em>even better</em> color space definition that takes
+into account how the human eye perceives color along with what
+lighting conditions you’re in and how long you’ve been fermenting
+that kombucha you’re drinking. It’s called LABCIE and it’s <em>crazy</em>.</p>
+<ul>
+<li>Lightness</li>
+<li>Perceptual uniformity</li>
 </ul>
 </notes><script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js"></script><script>'use strict'
 
