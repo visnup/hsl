@@ -149,36 +149,36 @@ html
         Color / Swatch / Hue
         --------------------
 
-      .hue( ng-init='buckets = 9' )
+      .hue( ng-init='buckets.h = 9' )
         p Let’s divide the rainbow up into 
-          input.c( type='number' step=3 ng-model='buckets' placeholder='#' )
+          input.c( ng-model='buckets.h' type='number' step=3 )
           |  colors:
 
         .hues( style='display: flex; justify-content: space-between' )
           span.swatch(
-            ng-style="{backgroundColor: $root.HSL(c*360/buckets, 100, 50)}"
-            ng-repeat='c in $root._.range(0, buckets)' )
+            ng-style="{backgroundColor: $root.HSL(c*360/buckets.h, 100, 50)}"
+            ng-repeat='c in $root._.range(0, buckets.h)' )
         .indexes( style='display: flex; justify-content: space-between' )
-          span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*buckets/3 | number}}
+          span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*buckets.h/3 | number}}
 
     notes: :marked( smartypants )
-      That's kinda intuitive-looking already. We've got all of the colors our
-      eyes can see in an array indexed from 0 to 100. So, if I want red I
-      just grab the color at 0 and if I want magenta, I grab the one at 100.
-      20ish is yellow and 50ish is cyan; it’s just a mapping and as we move
-      up and down the scale we get a predictable color from the rainbow.
+      That's kinda intuitive-looking already. We've got lots of the colors we
+      care about in an array indexed from 0 to {{buckets.h}}. So, if I want red
+      I just grab the color at 0 and if I want magenta, I grab the one at
+      {{buckets.h}}. {{buckets.h/3}}ish is green and {{buckets.h*2/3}}ish is
+      blue; it’s just a mapping and as we move up and down the scale we get a
+      predictable color from the rainbow.
+
+      We want to have more crayons in our box though, so increase that number
+      to something high, like 99. Now we're getting a proper rainbow.
 
     slide
       :marked( smartypants )
         Brightness / Colorfulness / Saturation
         --------------------------------------
 
-      .saturation( ng-init='hsl = $root.HSL(300, 100, 50)' )
-        p Given a hue of 
-          span.swatch( ng-style='{backgroundColor: $root.HSL(hsl.h, 100, 50)}' )
-          input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: $root.HSL(hsl.h, 100, 50)}' )
-          | ,
-
+      .saturation( ng-init='hsl = $root.HSL(300, 100, 50); buckets.s = 10' )
+        p Picking from our rainbow,
         .hues( style='display: flex; justify-content: space-between' )
           span.swatch(
             ng-style="{backgroundColor: $root.HSL(c, hsl.s, hsl.l)}"
@@ -187,15 +187,20 @@ html
         .indexes( style='display: flex; justify-content: space-between' )
           span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
 
-        p let’s remove <b>colorfulness</b> from it on a scale from 0 to 100:
+        p a hue of 
+          span.swatch( ng-style='{backgroundColor: $root.HSL(hsl.h, 100, 50)}' )
+          input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: $root.HSL(hsl.h, 100, 50)}' )
+          | , let’s bucket <b>colorfulness</b> of it on a scale from 0 to 
+          input.c( ng-model='buckets.s' type='number' step=10 )
+          | :
 
         .saturations( style='display: flex; justify-content: space-between' )
           span.swatch(
-            ng-style="{backgroundColor: $root.HSL(hsl.h, s, hsl.l)}"
-            ng-repeat='s in $root._.range(0, 100)'
+            ng-style="{backgroundColor: $root.HSL(hsl.h, s*100/buckets.s, hsl.l)}"
+            ng-repeat='s in $root._.range(0, buckets.s)'
             ng-click='hsl.s = s' )
         .indexes( style='display: flex; justify-content: space-between' )
-          span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+          span( ng-repeat='c in [0, 1, 2]' ) {{c*buckets.s/2 | number}}
 
     slide
       :marked( smartypants )
