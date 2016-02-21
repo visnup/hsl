@@ -57,6 +57,11 @@ input.c {
   border-radius: 1000px;
 }
 
+.scale {
+  display: flex;
+  justify-content: space-between;
+}
+
 .op {
   padding-left: 3rem;
 }

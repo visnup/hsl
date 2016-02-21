@@ -30,7 +30,7 @@ html
         The Problem
         ===========
 
-      div( ng-init='lhs=$root.RGB("ff","a5","00"); rhs=$root.RGB("33","33","33")' )
+      div( ng-init='lhs=RGB("ff","a5","00"); rhs=RGB("33","33","33")' )
         span.swatch( ng-style="{backgroundColor: lhs}" )
         input.c( ng-model='lhs.r' placeholder='R' ng-style='{borderBottomColor: lhs.rx}' )
         input.c( ng-model='lhs.g' placeholder='G' ng-style='{borderBottomColor: lhs.gx}' )
@@ -70,7 +70,7 @@ html
         RGB: adding lasers together
         ===========================
 
-      div( ng-init='rgb=$root.RGB("ff","a5","00")' )
+      div( ng-init='rgb=RGB("ff","a5","00")' )
         span.swatch( ng-style="{backgroundColor: rgb}" )
         input.c( ng-model='rgb.r' placeholder='R' ng-style='{borderBottomColor: rgb.rx}' )
         input.c( ng-model='rgb.g' placeholder='G' ng-style='{borderBottomColor: rgb.gx}' )
@@ -158,11 +158,12 @@ html
           input.c( ng-model='buckets.h' type='number' step=3 )
           |  colors:
 
-        .hues( style='display: flex; justify-content: space-between' )
+        .hues.scale
           span.swatch(
-            ng-style="{backgroundColor: $root.HSL(c*360/buckets.h, 100, 50)}"
-            ng-repeat='c in $root._.range(0, buckets.h)' )
-        .indexes( style='display: flex; justify-content: space-between' )
+            ng-repeat='h in _.range(0, buckets.h)'
+            ng-style="{backgroundColor: HSL(h*360/buckets.h, 100, 50)}"
+          )
+        .indexes.scale
           span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*buckets.h/3 | number}}
 
     notes: :marked( smartypants )
@@ -181,35 +182,73 @@ html
         Brightness / Colorfulness / Saturation
         --------------------------------------
 
-      .saturation( ng-init='hsl = $root.HSL(300, 100, 50); buckets.s = 10' )
+      .saturation( ng-init='hsl = HSL(300, 100, 50); buckets.s = 10' )
         p Picking from our rainbow,
-        .hues( style='display: flex; justify-content: space-between' )
+        .hues.scale
           span.swatch(
-            ng-style="{backgroundColor: $root.HSL(c, hsl.s, hsl.l)}"
-            ng-repeat='c in $root._.range(0, 360)'
-            ng-mouseenter='hsl.h = c' )
-        .indexes( style='display: flex; justify-content: space-between' )
+            ng-repeat='h in _.range(0, 360)'
+            ng-style="{backgroundColor: HSL(h, 100, 50)}"
+            ng-mouseenter='hsl.h = h'
+          )
+        .indexes.scale
           span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
 
         p a hue of 
-          span.swatch( ng-style='{backgroundColor: $root.HSL(hsl.h, 100, 50)}' )
-          input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: $root.HSL(hsl.h, 100, 50)}' )
+          span.swatch( ng-style='{backgroundColor: HSL(hsl.h, 100, 50)}' )
+          input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: HSL(hsl.h, 100, 50)}' )
           | , let’s bucket its <b>colorfulness</b> on a scale from 0 to 
           input.c( ng-model='buckets.s' type='number' step=10 )
           | :
 
-        .saturations( style='display: flex; justify-content: space-between' )
+        .saturations.scale
           span.swatch(
-            ng-style="{backgroundColor: $root.HSL(hsl.h, s*100/buckets.s, hsl.l)}"
-            ng-repeat='s in $root._.range(0, buckets.s)'
-            ng-click='hsl.s = s' )
-        .indexes( style='display: flex; justify-content: space-between' )
+            ng-repeat='s in _.range(0, buckets.s)'
+            ng-style="{backgroundColor: HSL(hsl.h, s*100/buckets.s, hsl.l)}"
+          )
+        .indexes.scale
           span( ng-repeat='c in [0, 1, 2]' ) {{c*buckets.s/2 | number}}
 
     slide
       :marked( smartypants )
         Lightness
         ---------
+
+      .lightness
+        p Picking from our rainbow,
+        .hues.scale
+          span.swatch(
+            ng-repeat='h in _.range(0, 360)'
+            ng-style="{backgroundColor: HSL(h, 100, 50)}"
+            ng-mouseenter='hsl.h = h'
+          )
+        .indexes.scale
+          span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
+
+        p a hue of 
+          span.swatch( ng-style='{backgroundColor: HSL(hsl.h, 100, 50)}' )
+          input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: HSL(hsl.h, 100, 50)}' )
+          | , and from our saturation scale,
+
+        .saturations.scale
+          span.swatch(
+            ng-repeat='s in _.range(0, 100)'
+            ng-style="{backgroundColor: HSL(hsl.h, s, hsl.l)}"
+            ng-mouseenter='hsl.s = s'
+          )
+        .indexes.scale
+          span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+
+        p a saturation of 
+          span.swatch( ng-style='{backgroundColor: HSL(hsl.h, hsl.s, 50)}' )
+          input.c( ng-model='hsl.s' placeholder='S' ng-style='{borderBottomColor: HSL(hsl.h, hsl.s, 50)}' )
+
+        .lightness.scale
+          span.swatch(
+            ng-repeat='l in _.range(0, 100)'
+            ng-style="{backgroundColor: HSL(hsl.h, hsl.s, l)}"
+          )
+        .indexes.scale
+          span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
       
     slide
       :marked( smartypants )
@@ -258,8 +297,11 @@ html
       
     slide
       :marked( smartypants )
-        Problems
-        ========
+        LAB
+        ===
+
+        The HSL You've Been Waiting For
+        -------------------------------
     notes
       :marked( smartypants )
         So, I know I just told you HSL was like the new Kanye album, but there
@@ -270,13 +312,15 @@ html
         Illumination** or if you like French, **Commission internationale de
         l'éclairage**, or if you think that's a mouthful, **CIE** for short.
 
-        They've published an _even better_ color space definition that takes
-        into account how the human eye perceives color along with what
-        lighting conditions you're in and how long you've been fermenting
-        that kombucha you're drinking. It's called LABCIE and it's _crazy_.
+        They've published an _even better_ colour space definition that takes
+        into account how the human eye perceives colour along with what
+        lighting conditions you're in and how long you've been fermenting that
+        kombucha you're drinking. It's called [CIELAB][1] and it's _crazy_.
 
         - Lightness
         - Perceptual uniformity
+
+        [1]: https://en.wikipedia.org/wiki/Lab_color_space
       
     script( src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js' )
     script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js' )
@@ -333,8 +377,8 @@ html
             this.slides = []
             
             this.add = function(slide) {
-              slide.index(this.slides.length)
               this.slides.push(slide)
+              return this.slides.length - 1
             }
 
             $document.on('keydown', function(e) {
@@ -354,13 +398,9 @@ html
         })
         .component('slide', {
           require: { deck: '^deck' },
-          controller($scope, $element) {
+          controller($element) {
             this.$onInit = function() {
-              this.deck.add(this)
-            }
-            
-            this.index = function(index) {
-              $element.attr('id', index)
+              $element.attr('id', this.deck.add(this))
             }
           }
         })
