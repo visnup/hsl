@@ -4,7 +4,7 @@
 meetup.</p>
 <p>The source for these slides is available at
 <a href="https://github.com/visnup/hsl">github.com/visnup/hsl</a>.</p>
-</notes><slide class="xs-center"><h1 id="the-problem">The Problem</h1>
+</notes><slide><h1 id="the-problem">The Problem</h1>
 <div ng-init="lhs=Color(&quot;#ffa500&quot;); rhs=Color(&quot;#333333&quot;)"><span ng-style="{backgroundColor: lhs}" class="swatch"></span><input ng-model="lhs.r" placeholder="R" ng-style="{borderBottomColor: lhs.rx}" class="c"><input ng-model="lhs.g" placeholder="G" ng-style="{borderBottomColor: lhs.gx}" class="c"><input ng-model="lhs.b" placeholder="B" ng-style="{borderBottomColor: lhs.bx}" class="c"><div class="op text-muted">+</div><span ng-style="{backgroundColor: rhs}" class="swatch"></span><input ng-model="rhs.r" placeholder="R" ng-style="{borderBottomColor: rhs.rx}" class="c"><input ng-model="rhs.g" placeholder="G" ng-style="{borderBottomColor: rhs.gx}" class="c"><input ng-model="rhs.b" placeholder="B" ng-style="{borderBottomColor: rhs.bx}" class="c"><div class="op text-muted">=</div><span ng-show="false">{{sum = lhs.plus(rhs)}}</span><span ng-style="{backgroundColor: sum}" class="swatch"></span><input ng-model="sum.r" placeholder="R" ng-style="{borderBottomColor: sum.rx}" readonly class="c"><input ng-model="sum.g" placeholder="G" ng-style="{borderBottomColor: sum.gx}" readonly class="c"><input ng-model="sum.b" placeholder="B" ng-style="{borderBottomColor: sum.bx}" readonly class="c"></div></slide><notes><h2 id="rgb-rgb-">RGB + RGB = 🤔</h2>
 <p><code>#ffa500</code> – that’s orange. <code>#ffd833</code> – that’s not a lighter orange;
 it’s yellow. <em>Of course</em>, you’re thinking, <em>one does not simply add
@@ -19,7 +19,8 @@ adding-colors-of-light-together world. You know who lives in that
 world?  LEDs and CRTs, that’s who. And scientists who play with lasers,
 AKA crazy people.</p>
 </notes><slide><h1 id="rgb-adding-lasers-together">RGB: adding lasers together</h1>
-<div ng-init="rgb=Color(&quot;#ffa500&quot;)"><span ng-style="{backgroundColor: rgb}" class="swatch"></span><input ng-model="rgb.r" placeholder="R" ng-style="{borderBottomColor: rgb.rx}" class="c"><input ng-model="rgb.g" placeholder="G" ng-style="{borderBottomColor: rgb.gx}" class="c"><input ng-model="rgb.b" placeholder="B" ng-style="{borderBottomColor: rgb.bx}" class="c"></div></slide><notes><ul>
+<p><img src="lasers.gif" alt="You actually want to cross the streams"></p>
+</slide><notes><ul>
 <li>Demo: RGB values next to each other and the color they make (zoom
 in and out)</li>
 </ul>
@@ -29,7 +30,7 @@ small batches to give to your friends in Oakland.</p>
 <p>RGB <em>is</em> like that guy in a North Face jacket and hoodie on the 38L
 Geary headed downtown, doing a line of cocaine off his iPhone. Yeah,
 RGB is not a “so-uncool-it’s-cool-again” thing.</p>
-</notes><slide><div class="row center-sm"><div class="col-xs-12 col-sm-6"><h3>Probably still cool</h3><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote></div><div class="col-xs-12 col-sm-6"><h3>Not cool</h3><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div></div></slide><slide ng-init="space = Color()"><h1 id="rgb-is-a-color-space">RGB is a color space</h1>
+</notes><slide><div class="row center-sm"><div class="col-xs-12 col-sm-6"><h3>Probably still cool</h3><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote></div><div class="col-xs-12 col-sm-6"><h3>Not cool</h3><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div></div></slide><slide ng-init="space = Color()"><h1 id="rgb-is-a-color-space">RGB is a color space</h1>
 <p class="center-xs"><span ng-style="{backgroundColor: space}" class="swatch"></span><input ng-model="space.r" ng-style="{borderBottomColor: space.rx}" type="number" step="8" placeholder="R" class="c"><input ng-model="space.g" ng-style="{borderBottomColor: space.gx}" type="number" step="8" placeholder="G" class="c"><input ng-model="space.b" ng-style="{borderBottomColor: space.bx}" type="number" step="8" placeholder="B" class="c"> <label><input type="checkbox" ng-model="space.fill"> Fill</label></p><rgb-space color="space" fill="space.fill"></rgb-space></slide><notes><p>RGB is what we call a <strong>color space</strong>, which sounds more scary than it
 really is. I’d define a color space as “a system to specify a color and
 reason about sets of colors.”</p>
@@ -56,8 +57,8 @@ intuitive</em>.</p>
 <li>Intuitive</li>
 </ul>
 </slide><notes><p>How would you describe <em>to the person next to you</em> the color of the <span
-style="background: skyblue">sky</span>? How would you compare that to the
-color of the <span style="background: aquamarine">ocean</span>? How would
+class="swatch sm" style="background:skyblue"></span> sky? How would you compare that to the
+color of the <span class="swatch sm" style="background: aquamarine"></span> ocean? How would
 you compare those colors to each other?</p>
 <p>Let’s pretend we were tasked with representing all the colors in an
 <em>intuitive</em> way. How would we start?</p>
@@ -65,11 +66,15 @@ you compare those colors to each other?</p>
 a kinda big array:</p>
 </notes><slide><h2 id="color-swatch-hue">Color / Swatch / Hue</h2>
 <div ng-init="buckets.h = 9" class="hue"><p>Let’s divide the rainbow up into <input ng-model="buckets.h" type="number" step="3" class="c"> colors:</p><div class="scale"><span ng-repeat="h in _.range(0, buckets.h)" ng-style="{backgroundColor: Color().hsl(h*360/buckets.h, 100, 50)}" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2, 3]">{{c*buckets.h/3 | number}}</span></div></div></slide><notes><p>That’s kinda intuitive-looking already. We’ve got lots of the colors we
-care about in an array indexed from 0 to {{buckets.h}}. So, if I want red
-I just grab the color at 0 and if I want magenta, I grab the one at
-{{buckets.h}}. {{buckets.h/3}}ish is green and {{buckets.h*2/3}}ish is
-blue; it’s just a mapping and as we move up and down the scale we get a
-predictable color from the rainbow.</p>
+care about in an array indexed from 0 to {{buckets.h}}. So, if I want
+<span class="swatch sm" style="background:red"></span> red I just grab the
+color at 0 and if I want <span class="swatch sm"
+style="background:magenta"></span> magenta, I grab the one at
+{{buckets.h}}. {{buckets.h/3}}ish is <span class="swatch sm"
+style="background:green"></span> green and {{buckets.h*2/3}}ish is <span
+class="swatch sm" style="background:blue"></span> blue; it’s just a mapping
+and as we move up and down the scale we get a predictable color from the
+rainbow.</p>
 <p>We want to have more crayons in our box though, so increase that number
 to something high, like 99. Now we’re getting a proper rainbow.</p>
 </notes><slide><h2 id="brightness-colorfulness-saturation">Brightness / Colorfulness / Saturation</h2>
@@ -85,13 +90,14 @@ RGB components are constrained within a narrow band.</li>
 not uniformly nor intuitively.</li>
 </ul>
 </notes><slide><h1 id="let-s-do-some-stuff-with-hsl">Let’s do some stuff with HSL</h1>
-</slide><slide><h2 id="lighten-or-darken-a-color">Lighten (or darken) a color</h2>
-</slide><notes><ul>
-<li>This is the original problem at the beginning</li>
-</ul>
-</notes><slide><h2 id="grayscale-a-photo">Grayscale a photo</h2>
-</slide><slide><h2 id="make-a-color-palette">Make a color palette</h2>
-</slide><slide><h1 id="hsl-is-everywhere-already">HSL is everywhere already</h1>
+</slide><slide ng-init="lighten = Color(&quot;orange&quot;)"><h2>Lighten (or darken) a color <span ng-style="{backgroundColor: lighten}" class="swatch"></span></h2><div class="picker"><div class="row hue"><div class="col-xs-2 col-sm-1"><input ng-model="lighten.h" placeholder="H" ng-style="{borderBottomColor: Color().hsl(lighten.h, 100, 50)}" class="c"></div><div class="col-xs-10 col-sm-11"><div class="scale"><span ng-repeat="h in _.range(0, 360)" ng-style="::{backgroundColor: Color().hsl(h, 100, 50)}" ng-class="{active: lighten.h === h}" ng-mouseenter="lighten.h = h" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2, 3]">{{c*360/3 | number}}</span></div></div></div><div class="row lightness"><div class="col-xs-2 col-sm-1"><input ng-model="lighten.l" placeholder="L" ng-style="{borderBottomColor: Color().hsl(lighten.h, 100, lighten.l)}" class="c"></div><div class="col-xs-10 col-sm-11"><div class="scale"><span ng-repeat="l in _.range(0, 101)" ng-style="{backgroundColor: Color().hsl(lighten.h, 100, l)}" ng-class="{active: lighten.l === l}" ng-mouseenter="lighten.l = l" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*100/2 | number}}</span></div></div></div></div></slide><notes><p>This should be pretty obvious since we’ve been doing it now a bunch
+throughout this last section. But just to drive it home, above you can
+pick whatever hue in HSL and then adjust the lightness value to be
+darker or lighter to your whims of fancy. This is exactly the problem
+we wanted to solve in the first place with lightening that orange.</p>
+</notes><slide ng-init="desaturate = Color(&quot;magenta&quot;) "><h2 id="grayscale-a-photo">Grayscale a photo</h2>
+<div><img style="width:100%" ng-style="{&quot;-webkit-filter&quot;: &quot;saturate(&quot;+desaturate.s+&quot;%)&quot;}" src="https://scontent-sjc2-1.cdninstagram.com/t51.2885-15/e35/11244497_1651371941744361_677993537_n.jpg?ig_cache_key=MTAzNDk5MzU1MDQ3MjYzNjE3Ng%3D%3D.2"></div><div class="row hue"><div class="col-xs-2 col-sm-1"><input ng-model="desaturate.s" placeholder="S" ng-style="{borderBottomColor: Color().hsl(desaturate.h, desaturate.s, 50)}" class="c"></div><div class="col-xs-10 col-sm-11"><div class="scale"><span ng-repeat="s in _.range(0, 101)" ng-style="::{backgroundColor: Color().hsl(desaturate.h, s, 50)}" ng-class="{active: desaturate.s === s}" ng-mouseenter="desaturate.s = s" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*100/2 | number}}</span></div></div></div></slide><slide><h2 id="make-a-color-palette">Make a color palette</h2>
+<div ng-init="palette = Color(&quot;red&quot;); buckets.palette = 1" class="palette"><div class="row saturation"><div class="col-xs-2 col-sm-1"><input ng-model="palette.s" placeholder="S" ng-style="{borderBottomColor: Color().hsl(palette.h, palette.s, 50)}" class="c"></div><div class="col-xs-10 col-sm-11"><div class="scale"><span ng-repeat="s in _.range(0, 101)" ng-style="{backgroundColor: Color().hsl(palette.h, s, 50)}" ng-class="{active: palette.s === s}" ng-mouseenter="palette.s = s" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*100/2 | number}}</span></div></div></div><div class="row lightness"><div class="col-xs-2 col-sm-1"><input ng-model="palette.l" placeholder="L" ng-style="{borderBottomColor: Color().hsl(palette.h, 100, palette.l)}" class="c"></div><div class="col-xs-10 col-sm-11"><div class="scale"><span ng-repeat="l in _.range(0, 101)" ng-style="{backgroundColor: Color().hsl(palette.h, 100, l)}" ng-class="{active: palette.l === l}" ng-mouseenter="palette.l = l" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*100/2 | number}}</span></div></div></div><p>Make me a palette with <input ng-model="buckets.palette" type="number" class="c"> colors!</p><div class="scale"><span ng-repeat="h in _.range(0, buckets.palette)" ng-style="{backgroundColor: Color().hsl(h*360/buckets.palette, palette.s, palette.l)}" class="swatch"></span></div></div></slide><slide><h1 id="hsl-is-everywhere-already">HSL is everywhere already</h1>
 </slide><notes><ul>
 <li>Chrome dev tools</li>
 <li>Color pickers<ul>
