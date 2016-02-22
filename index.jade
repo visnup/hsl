@@ -25,7 +25,7 @@ html
       [1]: http://peninsulajs.com/
       [2]: https://github.com/visnup/hsl
 
-    slide.xs-center
+    slide
       :marked( smartypants )
         The Problem
         ===========
@@ -69,12 +69,7 @@ html
       :marked( smartypants )
         RGB: adding lasers together
         ===========================
-
-      div( ng-init='rgb=Color("#ffa500")' )
-        span.swatch( ng-style="{backgroundColor: rgb}" )
-        input.c( ng-model='rgb.r' placeholder='R' ng-style='{borderBottomColor: rgb.rx}' )
-        input.c( ng-model='rgb.g' placeholder='G' ng-style='{borderBottomColor: rgb.gx}' )
-        input.c( ng-model='rgb.b' placeholder='B' ng-style='{borderBottomColor: rgb.bx}' )
+        ![You actually want to cross the streams](lasers.gif)
 
     notes: :marked( smartypants )
       - Demo: RGB values next to each other and the color they make (zoom
@@ -95,7 +90,8 @@ html
           != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote>'
         .col-xs-12.col-sm-6
           h3 Not cool
-          != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
+          != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote>'
+          != '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
 
     slide( ng-init='space = Color()' )
       :marked( smartypants )
@@ -159,8 +155,8 @@ html
 
     notes: :marked( smartypants )
       How would you describe _to the person next to you_ the color of the <span
-      style="background: skyblue">sky</span>? How would you compare that to the
-      color of the <span style="background: aquamarine">ocean</span>? How would
+      class="swatch sm" style="background:skyblue"></span> sky? How would you compare that to the
+      color of the <span class="swatch sm" style="background: aquamarine"></span> ocean? How would
       you compare those colors to each other?
 
       Let’s pretend we were tasked with representing all the colors in an
@@ -189,11 +185,15 @@ html
 
     notes: :marked( smartypants )
       That's kinda intuitive-looking already. We've got lots of the colors we
-      care about in an array indexed from 0 to {{buckets.h}}. So, if I want red
-      I just grab the color at 0 and if I want magenta, I grab the one at
-      {{buckets.h}}. {{buckets.h/3}}ish is green and {{buckets.h*2/3}}ish is
-      blue; it’s just a mapping and as we move up and down the scale we get a
-      predictable color from the rainbow.
+      care about in an array indexed from 0 to {{buckets.h}}. So, if I want
+      <span class="swatch sm" style="background:red"></span> red I just grab the
+      color at 0 and if I want <span class="swatch sm"
+      style="background:magenta"></span> magenta, I grab the one at
+      {{buckets.h}}. {{buckets.h/3}}ish is <span class="swatch sm"
+      style="background:green"></span> green and {{buckets.h*2/3}}ish is <span
+      class="swatch sm" style="background:blue"></span> blue; it’s just a mapping
+      and as we move up and down the scale we get a predictable color from the
+      rainbow.
 
       We want to have more crayons in our box though, so increase that number
       to something high, like 99. Now we're getting a proper rainbow.
@@ -375,24 +375,130 @@ html
         Let's do some stuff with HSL
         ============================
       
-    slide
-      :marked( smartypants )
-        Lighten (or darken) a color
-        ---------------------------
+    slide( ng-init='lighten = Color("orange")')
+      
+      h2 Lighten (or darken) a color 
+         span.swatch( ng-style='{backgroundColor: lighten}' )
+      
+      .picker
+        .row.hue
+          .col-xs-2.col-sm-1
+            input.c(
+              ng-model='lighten.h'
+              placeholder='H'
+              ng-style='{borderBottomColor: Color().hsl(lighten.h, 100, 50)}'
+            )
+          .col-xs-10.col-sm-11
+            .scale
+              span.swatch(
+                ng-repeat='h in _.range(0, 360)'
+                ng-style="::{backgroundColor: Color().hsl(h, 100, 50)}"
+                ng-class="{active: lighten.h === h}"
+                ng-mouseenter='lighten.h = h'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
+        .row.lightness
+          .col-xs-2.col-sm-1
+            input.c(
+              ng-model='lighten.l'
+              placeholder='L'
+              ng-style='{borderBottomColor: Color().hsl(lighten.h, 100, lighten.l)}'
+            )
+          .col-xs-10.col-sm-11
+            .scale
+              span.swatch(
+                ng-repeat='l in _.range(0, 101)'
+                ng-style="{backgroundColor: Color().hsl(lighten.h, 100, l)}"
+                ng-class="{active: lighten.l === l}"
+                ng-mouseenter='lighten.l = l'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+              
     notes
       :marked( smartypants )
-        - This is the original problem at the beginning
+        This should be pretty obvious since we've been doing it now a bunch
+        throughout this last section. But just to drive it home, above you can
+        pick whatever hue in HSL and then adjust the lightness value to be
+        darker or lighter to your whims of fancy. This is exactly the problem
+        we wanted to solve in the first place with lightening that orange.
     
-    slide
+    slide( ng-init='desaturate = Color("magenta") ')
       :marked( smartypants )
         Grayscale a photo
         -----------------
+
+      div: img( style='width:100%' ng-style='{"-webkit-filter": "saturate("+desaturate.s+"%)"}' src='https://scontent-sjc2-1.cdninstagram.com/t51.2885-15/e35/11244497_1651371941744361_677993537_n.jpg?ig_cache_key=MTAzNDk5MzU1MDQ3MjYzNjE3Ng%3D%3D.2' )
+
+      .row.hue
+        .col-xs-2.col-sm-1
+          input.c(
+            ng-model='desaturate.s'
+            placeholder='S'
+            ng-style='{borderBottomColor: Color().hsl(desaturate.h, desaturate.s, 50)}'
+          )
+        .col-xs-10.col-sm-11
+          .scale
+            span.swatch(
+              ng-repeat='s in _.range(0, 101)'
+              ng-style="::{backgroundColor: Color().hsl(desaturate.h, s, 50)}"
+              ng-class="{active: desaturate.s === s}"
+              ng-mouseenter='desaturate.s = s'
+            )
+          .scale
+            span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
 
     slide
       :marked( smartypants )
         Make a color palette
         --------------------
       
+      .palette( ng-init='palette = Color("red"); buckets.palette = 1' )
+        .row.saturation
+          .col-xs-2.col-sm-1
+            input.c(
+              ng-model='palette.s'
+              placeholder='S'
+              ng-style='{borderBottomColor: Color().hsl(palette.h, palette.s, 50)}'
+            )
+          .col-xs-10.col-sm-11
+            .scale
+              span.swatch(
+                ng-repeat='s in _.range(0, 101)'
+                ng-style="{backgroundColor: Color().hsl(palette.h, s, 50)}"
+                ng-class="{active: palette.s === s}"
+                ng-mouseenter='palette.s = s'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+        .row.lightness
+          .col-xs-2.col-sm-1
+            input.c(
+              ng-model='palette.l'
+              placeholder='L'
+              ng-style='{borderBottomColor: Color().hsl(palette.h, 100, palette.l)}'
+            )
+          .col-xs-10.col-sm-11
+            .scale
+              span.swatch(
+                ng-repeat='l in _.range(0, 101)'
+                ng-style="{backgroundColor: Color().hsl(palette.h, 100, l)}"
+                ng-class="{active: palette.l === l}"
+                ng-mouseenter='palette.l = l'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+
+        p Make me a palette with 
+          input.c( ng-model='buckets.palette' type='number' )
+          |  colors!
+        .scale
+          span.swatch(
+            ng-repeat='h in _.range(0, buckets.palette)'
+            ng-style="{backgroundColor: Color().hsl(h*360/buckets.palette, palette.s, palette.l)}"
+          )
+
     slide
       :marked( smartypants )
         HSL is everywhere already
