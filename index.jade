@@ -454,6 +454,51 @@ html
         Make a color palette
         --------------------
       
+      .palette( ng-init='palette = Color("red"); buckets.palette = 1' )
+        .row.saturation
+          .col-xs-2.col-sm-1
+            input.c(
+              ng-model='palette.s'
+              placeholder='S'
+              ng-style='{borderBottomColor: Color().hsl(palette.h, palette.s, 50)}'
+            )
+          .col-xs-10.col-sm-11
+            .scale
+              span.swatch(
+                ng-repeat='s in _.range(0, 101)'
+                ng-style="{backgroundColor: Color().hsl(palette.h, s, 50)}"
+                ng-class="{active: palette.s === s}"
+                ng-mouseenter='palette.s = s'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+        .row.lightness
+          .col-xs-2.col-sm-1
+            input.c(
+              ng-model='palette.l'
+              placeholder='L'
+              ng-style='{borderBottomColor: Color().hsl(palette.h, 100, palette.l)}'
+            )
+          .col-xs-10.col-sm-11
+            .scale
+              span.swatch(
+                ng-repeat='l in _.range(0, 101)'
+                ng-style="{backgroundColor: Color().hsl(palette.h, 100, l)}"
+                ng-class="{active: palette.l === l}"
+                ng-mouseenter='palette.l = l'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+
+        p Make me a palette with 
+          input.c( ng-model='buckets.palette' type='number' )
+          |  colors!
+        .scale
+          span.swatch(
+            ng-repeat='h in _.range(0, buckets.palette)'
+            ng-style="{backgroundColor: Color().hsl(h*360/buckets.palette, palette.s, palette.l)}"
+          )
+
     slide
       :marked( smartypants )
         HSL is everywhere already
