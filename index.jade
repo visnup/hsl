@@ -97,12 +97,31 @@ html
           h3 Not cool
           != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
 
-    slide
+    slide( ng-init='space = Color().rgb(0, 255, 128)' )
       :marked( smartypants )
         RGB is a color space
         ====================
 
-        [cool R, G, B = X, Y, Z thing]
+      .center-xs
+        span.swatch( ng-style="{backgroundColor: space}" )
+        | 
+        input.c(
+          ng-model='space.r'
+          ng-style='{borderBottomColor: space.rx}'
+          type='number' step=8 placeholder='R'
+        )
+        input.c(
+          ng-model='space.g'
+          ng-style='{borderBottomColor: space.gx}'
+          type='number' step=8 placeholder='G'
+        )
+        input.c(
+          ng-model='space.b'
+          ng-style='{borderBottomColor: space.bx}'
+          type='number' step=8 placeholder='B'
+        )
+        rgb-space( color='space' )
+
     notes: :marked( smartypants )
       RGB is what we call a **color space**, which sounds more scary than it
       really is. I'd define a color space as "a system to specify a color and
@@ -410,9 +429,10 @@ html
         - Perceptual uniformity
 
         [1]: https://en.wikipedia.org/wiki/Lab_color_space
-      
+
     script( src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js' )
     script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js' )
+    script( src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r74/three.min.js' )
     script( src='color.min.js' )
     script.
       'use strict'
@@ -444,7 +464,7 @@ html
       })
 
       angular
-        .module('hsl', [])
+        .module('slides', [])
         .component('deck', {
           controller($document) {
             this.slides = []
@@ -475,6 +495,44 @@ html
             this.$onInit = function() {
               $element.attr('id', this.deck.add(this))
             }
+          }
+        })
+
+      angular.module('hsl', ['slides'])
+        .component('rgbSpace', {
+          bindings: { color: '<' },
+          controller($scope, $element) {
+            var canvas = $element[0]
+            var scene = new THREE.Scene()
+            var camera = new THREE.PerspectiveCamera(75, 1, 1, 1000)
+            var renderer = new THREE.WebGLRenderer({ alpha: true })
+
+            renderer.setSize(canvas.offsetWidth, canvas.offsetWidth)
+            $element.append(renderer.domElement)
+
+            var axes = new THREE.AxisHelper(256)
+            scene.add(axes)
+
+            var geometry = new THREE.BoxGeometry(10, 10, 10)
+            var material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+            var cube = new THREE.Mesh(geometry, material)
+            scene.add(cube)
+
+            camera.position.x = 300
+            camera.position.y = 260
+            camera.position.z = 300
+            camera.lookAt(new THREE.Vector3(0, 0, 0))
+            renderer.render(scene, camera)
+
+            var self = this
+            $scope.$watch(function() { return self.color }, function() {
+              cube.position.x = self.color.r
+              cube.position.y = self.color.g
+              cube.position.z = self.color.b
+
+              material.color.set(self.color.rgbNumber())
+              renderer.render(scene, camera)
+            }, true)
           }
         })
         .run(function($rootScope) {

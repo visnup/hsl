@@ -39,11 +39,18 @@ slide.xs-center > * {
   text-align: center;
 }
 
+rgb-space {
+  display: block;
+}
+
 input.c {
   width: 3rem;
   text-align: center;
   border: none;
   border-bottom: solid 5px black;
+}
+input.c[type=number] {
+  width: 4rem;
 }
 
 .swatch {
@@ -52,6 +59,10 @@ input.c {
   height: 3rem;
   vertical-align: middle;
   border-radius: 1000px;
+}
+.swatch.sm {
+  width: 1rem;
+  height: 1rem;
 }
 
 .scale {
