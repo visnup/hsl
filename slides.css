@@ -58,6 +58,9 @@ input.c {
   display: flex;
   justify-content: space-between;
 }
+.scale .swatch.active {
+  opacity: .5;
+}
 
 .op {
   padding-left: 3rem;

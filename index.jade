@@ -187,6 +187,7 @@ html
           span.swatch(
             ng-repeat='h in _.range(0, 360)'
             ng-style="{backgroundColor: Color().hsl(h, 100, 50)}"
+            ng-class="{active: hsl.h === h}"
             ng-mouseenter='hsl.h = h'
           )
         .scale
@@ -242,6 +243,7 @@ html
               span.swatch(
                 ng-repeat='h in _.range(0, 360)'
                 ng-style="{backgroundColor: Color().hsl(h, 100, 50)}"
+                ng-class="{active: color.h === h}"
                 ng-mouseenter='color.h = h'
               )
             .scale
@@ -258,6 +260,7 @@ html
               span.swatch(
                 ng-repeat='s in _.range(0, 101)'
                 ng-style="{backgroundColor: Color().hsl(color.h, s, 50)}"
+                ng-class="{active: color.s === s}"
                 ng-mouseenter='color.s = s'
               )
             .scale
@@ -274,6 +277,7 @@ html
               span.swatch(
                 ng-repeat='l in _.range(0, 101)'
                 ng-style="{backgroundColor: Color().hsl(color.h, 100, l)}"
+                ng-class="{active: color.l === l}"
                 ng-mouseenter='color.l = l'
               )
             .scale
@@ -294,6 +298,7 @@ html
               span.swatch(
                 ng-repeat='r in _.range(0, 256)'
                 ng-style="{backgroundColor: Color().red(r)}"
+                ng-class="{active: color.r === r}"
                 ng-mouseenter='color.r = r'
               )
             .scale
@@ -310,6 +315,7 @@ html
               span.swatch(
                 ng-repeat='g in _.range(0, 256)'
                 ng-style="{backgroundColor: Color().green(g)}"
+                ng-class="{active: color.g === g}"
                 ng-mouseenter='color.g = g'
               )
             .scale
@@ -326,6 +332,7 @@ html
               span.swatch(
                 ng-repeat='b in _.range(0, 256)'
                 ng-style="{backgroundColor: Color().blue(b)}"
+                ng-class="{active: color.b === b}"
                 ng-mouseenter='color.b = b'
               )
             .scale
