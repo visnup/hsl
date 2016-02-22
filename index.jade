@@ -30,7 +30,7 @@ html
         The Problem
         ===========
 
-      div( ng-init='lhs=Color("#ffa500"); rhs=Color("#333333")' )
+      div( ng-init='lhs=Color("orange"); rhs=Color().rgb(128, 35, 100)' )
         span.swatch( ng-style="{backgroundColor: lhs}" )
         input.c( ng-model='lhs.r' placeholder='R' ng-style='{borderBottomColor: lhs.rx}' )
         input.c( ng-model='lhs.g' placeholder='G' ng-style='{borderBottomColor: lhs.gx}' )
