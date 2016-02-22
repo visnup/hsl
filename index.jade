@@ -97,12 +97,34 @@ html
           h3 Not cool
           != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
 
-    slide
+    slide( ng-init='space = Color()' )
       :marked( smartypants )
         RGB is a color space
         ====================
 
-        [cool R, G, B = X, Y, Z thing]
+      p.center-xs
+        span.swatch( ng-style="{backgroundColor: space}" )
+        input.c(
+          ng-model='space.r'
+          ng-style='{borderBottomColor: space.rx}'
+          type='number' step=8 placeholder='R'
+        )
+        input.c(
+          ng-model='space.g'
+          ng-style='{borderBottomColor: space.gx}'
+          type='number' step=8 placeholder='G'
+        )
+        input.c(
+          ng-model='space.b'
+          ng-style='{borderBottomColor: space.bx}'
+          type='number' step=8 placeholder='B'
+        )
+        | 
+        label
+          input( type='checkbox' ng-model='space.fill' )
+          |  Fill
+      rgb-space( color='space' fill='space.fill' )
+
     notes: :marked( smartypants )
       RGB is what we call a **color space**, which sounds more scary than it
       really is. I'd define a color space as "a system to specify a color and
@@ -410,41 +432,17 @@ html
         - Perceptual uniformity
 
         [1]: https://en.wikipedia.org/wiki/Lab_color_space
-      
+
     script( src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js' )
     script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js' )
+    script( src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r74/three.min.js' )
+    script( src='https://npmcdn.com/three@0.74.0/examples/js/controls/TrackballControls.js' )
     script( src='color.min.js' )
     script.
       'use strict'
 
-      Object.defineProperties(Color.prototype, {
-        r: { get: Color.prototype.red, set: Color.prototype.red },
-        g: { get: Color.prototype.green, set: Color.prototype.green },
-        b: { get: Color.prototype.blue, set: Color.prototype.blue },
-
-        rx: { get: function() { return Color().red(this.red()) } },
-        gx: { get: function() { return Color().green(this.green()) } },
-        bx: { get: function() { return Color().blue(this.blue()) } },
-
-        h: { get: Color.prototype.hue, set: Color.prototype.hue },
-        s: { get: Color.prototype.saturation, set: Color.prototype.saturation },
-        l: { get: Color.prototype.lightness, set: Color.prototype.lightness },
-
-        toString: { value: Color.prototype.rgbString },
-
-        // reductio ad absurdum
-        plus: {
-          value: function(other) {
-            var r = _.clamp(this.r + other.r, 0, 255),
-                g = _.clamp(this.g + other.g, 0, 255),
-                b = _.clamp(this.b + other.b, 0, 255)
-            return Color().rgb(r, g, b)
-          }
-        },
-      })
-
       angular
-        .module('hsl', [])
+        .module('slides', [])
         .component('deck', {
           controller($document) {
             this.slides = []
@@ -477,7 +475,102 @@ html
             }
           }
         })
+
+      angular.module('hsl', ['slides'])
+        .component('rgbSpace', {
+          bindings: { color: '<', fill: '<' },
+          controller($scope, $element) {
+            var canvas = $element[0]
+            var scene = new THREE.Scene()
+
+            var axes = new THREE.AxisHelper(256)
+            scene.add(axes)
+
+            var material = new THREE.MeshBasicMaterial()
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(20,20,20), material)
+            scene.add(cube)
+
+            var camera = new THREE.PerspectiveCamera(75, 1, 1, 1000)
+            camera.position.set(300, 280, 360)
+            camera.lookAt(new THREE.Vector3(0, 0, 0))
+
+            var renderer = new THREE.WebGLRenderer({ alpha: true })
+            renderer.setSize(canvas.offsetWidth, canvas.offsetWidth)
+            $element.append(renderer.domElement)
+
+            var controls = new THREE.TrackballControls(camera, renderer.domElement)
+
+            var self = this
+            $scope.$watch(function() { return self.color }, function() {
+              cube.position.set(self.color.r, self.color.g, self.color.b)
+              material.color.set(self.color.rgbNumber())
+            }, true)
+
+            $scope.$watch(function() { return self.fill }, function() {
+              self.toggleFill(self.fill)
+            })
+
+            ;(function render() {
+              controls.update()
+              renderer.render(scene, camera)
+              requestAnimationFrame(render)
+            })()
+
+            this.toggleFill = function(fill) {
+              if (fill) {
+                var step = 50;
+                var geometry = new THREE.BoxGeometry(step/2, step/2, step/2)
+                for (var r = 0; r < 256; r += step) {
+                  for (var g = 0; g < 256; g += step) {
+                    for (var b = 0; b < 256; b += step) {
+                      var color = Color().rgb(r, g, b).rgbNumber()
+                      var material = new THREE.MeshBasicMaterial({ color: color })
+                      var cube = new THREE.Mesh(geometry, material)
+                      cube.name = 'fill'
+                      cube.position.set(r, g, b)
+                      scene.add(cube)
+                    }
+                  }
+                }
+              } else {
+                var cubes = _.filter(scene.children, { name: 'fill' })
+                scene.remove.apply(scene, cubes)
+              }
+            }
+
+            this.removeFill = function() {
+              _.forEach(cubes, scene.remove.bind(scene))
+            }
+          }
+        })
         .run(function($rootScope) {
           $rootScope._ = _
           $rootScope.Color = Color
         })
+
+      // extend Color
+      Object.defineProperties(Color.prototype, {
+        r: { get: Color.prototype.red, set: Color.prototype.red },
+        g: { get: Color.prototype.green, set: Color.prototype.green },
+        b: { get: Color.prototype.blue, set: Color.prototype.blue },
+
+        rx: { get: function() { return Color().red(this.red()) } },
+        gx: { get: function() { return Color().green(this.green()) } },
+        bx: { get: function() { return Color().blue(this.blue()) } },
+
+        h: { get: Color.prototype.hue, set: Color.prototype.hue },
+        s: { get: Color.prototype.saturation, set: Color.prototype.saturation },
+        l: { get: Color.prototype.lightness, set: Color.prototype.lightness },
+
+        toString: { value: Color.prototype.rgbString },
+
+        // reductio ad absurdum
+        plus: {
+          value: function(other) {
+            var r = _.clamp(this.r + other.r, 0, 255),
+                g = _.clamp(this.g + other.g, 0, 255),
+                b = _.clamp(this.b + other.b, 0, 255)
+            return Color().rgb(r, g, b)
+          }
+        },
+      })
