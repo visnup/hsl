@@ -254,13 +254,13 @@ html
       .picker
         h4 HSL
         .row.hue
-          .col-xs-1
+          .col-xs-2.col-sm-1
             input.c(
               ng-model='color.h'
               placeholder='H'
               ng-style='{borderBottomColor: Color().hsl(color.h, 100, 50)}'
             )
-          .col-xs-11
+          .col-xs-10.col-sm-11
             .scale
               span.swatch(
                 ng-repeat='h in _.range(0, 360)'
@@ -271,13 +271,13 @@ html
             .scale
               span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
         .row.saturation
-          .col-xs-1
+          .col-xs-2.col-sm-1
             input.c(
               ng-model='color.s'
               placeholder='S'
               ng-style='{borderBottomColor: Color().hsl(color.h, color.s, 50)}'
             )
-          .col-xs-11
+          .col-xs-10.col-sm-11
             .scale
               span.swatch(
                 ng-repeat='s in _.range(0, 101)'
@@ -288,13 +288,13 @@ html
             .scale
               span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
         .row.lightness
-          .col-xs-1
+          .col-xs-2.col-sm-1
             input.c(
               ng-model='color.l'
               placeholder='L'
               ng-style='{borderBottomColor: Color().hsl(color.h, 100, color.l)}'
             )
-          .col-xs-11
+          .col-xs-10.col-sm-11
             .scale
               span.swatch(
                 ng-repeat='l in _.range(0, 101)'
@@ -307,13 +307,13 @@ html
 
         h4 RGB
         .row.red
-          .col-xs-1
+          .col-xs-2.col-sm-1
             input.c(
               ng-model='color.r'
               placeholder='R'
               ng-style='{borderBottomColor: color.rx}'
             )
-          .col-xs-11
+          .col-xs-10.col-sm-11
             .scale
               span.swatch(
                 ng-repeat='r in _.range(0, 256)'
@@ -324,13 +324,13 @@ html
             .scale
               span( ng-repeat='c in [0, 1, 2]' ) {{c*256/2 | number}}
         .row.green
-          .col-xs-1
+          .col-xs-2.col-sm-1
             input.c(
               ng-model='color.g'
               placeholder='G'
               ng-style='{borderBottomColor: color.gx}'
             )
-          .col-xs-11
+          .col-xs-10.col-sm-11
             .scale
               span.swatch(
                 ng-repeat='g in _.range(0, 256)'
@@ -341,13 +341,13 @@ html
             .scale
               span( ng-repeat='c in [0, 1, 2]' ) {{c*256/2 | number}}
         .row.blue
-          .col-xs-1
+          .col-xs-2.col-sm-1
             input.c(
               ng-model='color.b'
               placeholder='B'
               ng-style='{borderBottomColor: color.bx}'
             )
-          .col-xs-11
+          .col-xs-10.col-sm-11
             .scale
               span.swatch(
                 ng-repeat='b in _.range(0, 256)'
