@@ -374,13 +374,54 @@ html
         Let's do some stuff with HSL
         ============================
       
-    slide
-      :marked( smartypants )
-        Lighten (or darken) a color
-        ---------------------------
+    slide( ng-init='lighten = Color("orange")')
+      
+      h2 Lighten (or darken) a color 
+         span.swatch( ng-style='{backgroundColor: lighten}' )
+      
+      .picker
+        .row.hue
+          .col-xs-2.col-sm-1
+            input.c(
+              ng-model='lighten.h'
+              placeholder='H'
+              ng-style='{borderBottomColor: Color().hsl(lighten.h, 100, 50)}'
+            )
+          .col-xs-10.col-sm-11
+            .scale
+              span.swatch(
+                ng-repeat='h in _.range(0, 360)'
+                ng-style="::{backgroundColor: Color().hsl(h, 100, 50)}"
+                ng-class="{active: lighten.h === h}"
+                ng-mouseenter='lighten.h = h'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
+        .row.lightness
+          .col-xs-2.col-sm-1
+            input.c(
+              ng-model='lighten.l'
+              placeholder='L'
+              ng-style='{borderBottomColor: Color().hsl(lighten.h, 100, lighten.l)}'
+            )
+          .col-xs-10.col-sm-11
+            .scale
+              span.swatch(
+                ng-repeat='l in _.range(0, 101)'
+                ng-style="{backgroundColor: Color().hsl(lighten.h, 100, l)}"
+                ng-class="{active: lighten.l === l}"
+                ng-mouseenter='lighten.l = l'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+              
     notes
       :marked( smartypants )
-        - This is the original problem at the beginning
+        This should be pretty obvious since we've been doing it now a bunch
+        throughout this last section. But just to drive it home, above you can
+        pick whatever hue in HSL and then adjust the lightness value to be
+        darker or lighter to your whims of fancy. This is exactly the problem
+        we wanted to solve in the first place with lightening that orange.
     
     slide
       :marked( smartypants )
