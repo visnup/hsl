@@ -13,7 +13,7 @@
   "scripts": {
     "start": "jade --watch index.jade",
     "prepublish": "webpack -p --output-library=Color --output-library-target=umd color color.min.js && jade index.jade",
-    "test": "git checkout gh-pages && git pull && git merge master && npm install && (git diff HEAD --quiet || git commit -am publish) && git push && git checkout -"
+    "test": "git checkout gh-pages && git pull && git merge master && npm install && (git diff HEAD --quiet || git commit -am publish) && git push && git checkout - && npm install"
   },
   "author": "",
   "license": "ISC"
