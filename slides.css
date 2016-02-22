@@ -3,7 +3,7 @@
 @import url(https://fonts.googleapis.com/css?family=Catamaran:400,600);
 
 body, input {
-  font: x-large 'Catamaran', sans-serif;
+  font: x-large/1.75em 'Catamaran', sans-serif;
 }
 
 a {
