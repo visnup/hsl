@@ -186,7 +186,7 @@ html
         .scale
           span.swatch(
             ng-repeat='h in _.range(0, 360)'
-            ng-style="{backgroundColor: Color().hsl(h, 100, 50)}"
+            ng-style="::{backgroundColor: Color().hsl(h, 100, 50)}"
             ng-class="{active: hsl.h === h}"
             ng-mouseenter='hsl.h = h'
           )
@@ -242,7 +242,7 @@ html
             .scale
               span.swatch(
                 ng-repeat='h in _.range(0, 360)'
-                ng-style="{backgroundColor: Color().hsl(h, 100, 50)}"
+                ng-style="::{backgroundColor: Color().hsl(h, 100, 50)}"
                 ng-class="{active: color.h === h}"
                 ng-mouseenter='color.h = h'
               )
@@ -297,7 +297,7 @@ html
             .scale
               span.swatch(
                 ng-repeat='r in _.range(0, 256)'
-                ng-style="{backgroundColor: Color().red(r)}"
+                ng-style="::{backgroundColor: Color().red(r)}"
                 ng-class="{active: color.r === r}"
                 ng-mouseenter='color.r = r'
               )
@@ -314,13 +314,13 @@ html
             .scale
               span.swatch(
                 ng-repeat='g in _.range(0, 256)'
-                ng-style="{backgroundColor: Color().green(g)}"
+                ng-style="::{backgroundColor: Color().green(g)}"
                 ng-class="{active: color.g === g}"
                 ng-mouseenter='color.g = g'
               )
             .scale
               span( ng-repeat='c in [0, 1, 2]' ) {{c*256/2 | number}}
-        .row.red
+        .row.blue
           .col-xs-1
             input.c(
               ng-model='color.b'
@@ -331,7 +331,7 @@ html
             .scale
               span.swatch(
                 ng-repeat='b in _.range(0, 256)'
-                ng-style="{backgroundColor: Color().blue(b)}"
+                ng-style="::{backgroundColor: Color().blue(b)}"
                 ng-class="{active: color.b === b}"
                 ng-mouseenter='color.b = b'
               )
