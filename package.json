@@ -1,20 +1,28 @@
 {
-  "name": "hsl",
+  "name": "hsl-the-rgb-you-have-been-waiting-for",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A talk given at the February 2016 PeninsulaJS",
+  "main": "index.html",
   "dependencies": {
     "color": "0.11.1",
     "jade": "1.11.0",
     "jstransformer-marked": "1.0.1",
     "webpack": "1.12.13"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "jade --watch index.jade",
     "prepublish": "webpack -p --output-library=Color --output-library-target=umd color color.min.js && jade index.jade",
     "test": "git checkout gh-pages && git pull && git merge master && npm install && (git diff HEAD --quiet || git commit -am publish) && git push && git checkout - && npm install"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Visnu Pitiyanuvath <visnup@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/visnup/hsl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/visnup/hsl/issues"
+  },
+  "homepage": "https://visnup.github.io/hsl"
 }
