@@ -225,12 +225,12 @@ html
         .scale
           span( ng-repeat='c in [0, 1, 2]' ) {{c*buckets.l/2 | number}}
       
-    slide
-      :marked( smartypants )
-        Putting it all together
-        =======================
+    slide( ng-init='color = Color("magenta")' )
+      h1 Putting it all together 
+         span.swatch( ng-style='{backgroundColor: color}' )
 
-      .picker( ng-init='color = Color("papayawhip")' )
+      .picker
+        h4 HSL
         .row.hue
           .col-xs-1
             input.c(
@@ -283,9 +283,7 @@ html
             .scale
               span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
 
-        .row: .col-xs-1
-          span.swatch( ng-style='{backgroundColor: color}' )
-
+        h4 RGB
         .row.red
           .col-xs-1
             input.c(
