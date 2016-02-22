@@ -210,53 +210,84 @@ html
 
     slide
       :marked( smartypants )
-        Lightness
-        ---------
+        Whiteness / Light / Lightness
+        -----------------------------
 
-      .lightness
-        p Picking from our rainbow,
-        .hues.scale
-          span.swatch(
-            ng-repeat='h in _.range(0, 360)'
-            ng-style="{backgroundColor: HSL(h, 100, 50)}"
-            ng-mouseenter='hsl.h = h'
-          )
-        .indexes.scale
-          span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
-
-        p a hue of 
-          span.swatch( ng-style='{backgroundColor: HSL(hsl.h, 100, 50)}' )
-          input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: HSL(hsl.h, 100, 50)}' )
-          | , and from our saturation scale,
-
-        .saturations.scale
-          span.swatch(
-            ng-repeat='s in _.range(0, 100)'
-            ng-style="{backgroundColor: HSL(hsl.h, s, hsl.l)}"
-            ng-mouseenter='hsl.s = s'
-          )
-        .indexes.scale
-          span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
-
-        p a saturation of 
-          span.swatch( ng-style='{backgroundColor: HSL(hsl.h, hsl.s, 50)}' )
-          input.c( ng-model='hsl.s' placeholder='S' ng-style='{borderBottomColor: HSL(hsl.h, hsl.s, 50)}' )
+      .lightness( ng-init='buckets.l = 10' )
+        p How much <b>light</b> is falling on our color? 
+          input.c( ng-model='buckets.l' type='number' step=10 )
 
         .lightness.scale
           span.swatch(
-            ng-repeat='l in _.range(0, 100)'
-            ng-style="{backgroundColor: HSL(hsl.h, hsl.s, l)}"
+            ng-repeat='l in _.range(0, buckets.l)'
+            ng-style="{backgroundColor: HSL(hsl.h, hsl.s, l*100/buckets.l)}"
           )
         .indexes.scale
-          span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+          span( ng-repeat='c in [0, 1, 2]' ) {{c*buckets.l/2 | number}}
       
     slide
       :marked( smartypants )
         Putting it all together
         =======================
+
+      .picker
+        .row.hue
+          .col-xs-1
+            input.c(
+              ng-model='hsl.h'
+              placeholder='H'
+              ng-style='{borderBottomColor: HSL(hsl.h, 100, 50)}'
+            )
+          .col-xs-11
+            .hues.scale
+              span.swatch(
+                ng-repeat='h in _.range(0, 360)'
+                ng-style="{backgroundColor: HSL(h, 100, 50)}"
+                ng-mouseenter='hsl.h = h'
+              )
+            .indexes.scale
+              span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
+        .row.saturation
+          .col-xs-1
+            input.c(
+              ng-model='hsl.s'
+              placeholder='S'
+              ng-style='{borderBottomColor: HSL(hsl.h, hsl.s, 50)}'
+            )
+          .col-xs-11
+            .hues.scale
+              span.swatch(
+                ng-repeat='s in _.range(0, 100)'
+                ng-style="{backgroundColor: HSL(hsl.h, s, 50)}"
+                ng-mouseenter='hsl.s = s'
+              )
+            .indexes.scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+        .row.lightness
+          .col-xs-1
+            input.c(
+              ng-model='hsl.l'
+              placeholder='L'
+              ng-style='{borderBottomColor: HSL(hsl.h, 100, hsl.l)}'
+            )
+          .col-xs-11
+            .hues.scale
+              span.swatch(
+                ng-repeat='l in _.range(0, 100)'
+                ng-style="{backgroundColor: HSL(hsl.h, 100, l)}"
+                ng-mouseenter='hsl.l = l'
+              )
+            .indexes.scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+
+        .row: .col-xs-1
+          span.swatch( ng-style='{backgroundColor: hsl}' )
+
+        p [ linked RGB sliders ]
+
     notes
       :marked( smartypants )
-        - Gamut
+        - Same domain as RGB
         - Transform from RGB
       
     slide
@@ -324,6 +355,7 @@ html
       
     script( src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js' )
     script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js' )
+    script( src='https://npmcdn.com/color@0.11.1' )
     script.
       'use strict'
 
