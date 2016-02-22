@@ -25,7 +25,7 @@ html
       [1]: http://peninsulajs.com/
       [2]: https://github.com/visnup/hsl
 
-    slide.xs-center
+    slide
       :marked( smartypants )
         The Problem
         ===========
@@ -69,12 +69,7 @@ html
       :marked( smartypants )
         RGB: adding lasers together
         ===========================
-
-      div( ng-init='rgb=Color("#ffa500")' )
-        span.swatch( ng-style="{backgroundColor: rgb}" )
-        input.c( ng-model='rgb.r' placeholder='R' ng-style='{borderBottomColor: rgb.rx}' )
-        input.c( ng-model='rgb.g' placeholder='G' ng-style='{borderBottomColor: rgb.gx}' )
-        input.c( ng-model='rgb.b' placeholder='B' ng-style='{borderBottomColor: rgb.bx}' )
+        ![You actually want to cross the streams](lasers.gif)
 
     notes: :marked( smartypants )
       - Demo: RGB values next to each other and the color they make (zoom
@@ -159,8 +154,8 @@ html
 
     notes: :marked( smartypants )
       How would you describe _to the person next to you_ the color of the <span
-      style="background: skyblue">sky</span>? How would you compare that to the
-      color of the <span style="background: aquamarine">ocean</span>? How would
+      class="swatch sm" style="background:skyblue"></span> sky? How would you compare that to the
+      color of the <span class="swatch sm" style="background: aquamarine"></span> ocean? How would
       you compare those colors to each other?
 
       Let’s pretend we were tasked with representing all the colors in an
@@ -189,11 +184,15 @@ html
 
     notes: :marked( smartypants )
       That's kinda intuitive-looking already. We've got lots of the colors we
-      care about in an array indexed from 0 to {{buckets.h}}. So, if I want red
-      I just grab the color at 0 and if I want magenta, I grab the one at
-      {{buckets.h}}. {{buckets.h/3}}ish is green and {{buckets.h*2/3}}ish is
-      blue; it’s just a mapping and as we move up and down the scale we get a
-      predictable color from the rainbow.
+      care about in an array indexed from 0 to {{buckets.h}}. So, if I want
+      <span class="swatch sm" style="background:red"></span> red I just grab the
+      color at 0 and if I want <span class="swatch sm"
+      style="background:magenta"></span> magenta, I grab the one at
+      {{buckets.h}}. {{buckets.h/3}}ish is <span class="swatch sm"
+      style="background:green"></span> green and {{buckets.h*2/3}}ish is <span
+      class="swatch sm" style="background:blue"></span> blue; it’s just a mapping
+      and as we move up and down the scale we get a predictable color from the
+      rainbow.
 
       We want to have more crayons in our box though, so increase that number
       to something high, like 99. Now we're getting a proper rainbow.
