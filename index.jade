@@ -90,7 +90,8 @@ html
           != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote>'
         .col-xs-12.col-sm-6
           h3 Not cool
-          != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
+          != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote>'
+          != '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
 
     slide( ng-init='space = Color()' )
       :marked( smartypants )
@@ -423,10 +424,30 @@ html
         darker or lighter to your whims of fancy. This is exactly the problem
         we wanted to solve in the first place with lightening that orange.
     
-    slide
+    slide( ng-init='desaturate = Color("magenta") ')
       :marked( smartypants )
         Grayscale a photo
         -----------------
+
+      div: img( style='width:100%' ng-style='{"-webkit-filter": "saturate("+desaturate.s+"%)"}' src='https://scontent-sjc2-1.cdninstagram.com/t51.2885-15/e35/11244497_1651371941744361_677993537_n.jpg?ig_cache_key=MTAzNDk5MzU1MDQ3MjYzNjE3Ng%3D%3D.2' )
+
+      .row.hue
+        .col-xs-2.col-sm-1
+          input.c(
+            ng-model='desaturate.s'
+            placeholder='S'
+            ng-style='{borderBottomColor: Color().hsl(desaturate.h, desaturate.s, 50)}'
+          )
+        .col-xs-10.col-sm-11
+          .scale
+            span.swatch(
+              ng-repeat='s in _.range(0, 101)'
+              ng-style="::{backgroundColor: Color().hsl(desaturate.h, s, 50)}"
+              ng-class="{active: desaturate.s === s}"
+              ng-mouseenter='desaturate.s = s'
+            )
+          .scale
+            span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
 
     slide
       :marked( smartypants )
