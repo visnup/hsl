@@ -89,12 +89,11 @@ html
       RGB is not a "so-uncool-it’s-cool-again" thing.
 
     slide
-      .cool-not-cool( style='display: flex; text-align: center' )
-        div
+      .row.center-sm
+        .col-xs-12.col-sm-6
           h3 Probably still cool
           != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote>'
-        | &nbsp;
-        div
+        .col-xs-12.col-sm-6
           h3 Not cool
           != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
 
@@ -158,12 +157,12 @@ html
           input.c( ng-model='buckets.h' type='number' step=3 )
           |  colors:
 
-        .hues.scale
+        .scale
           span.swatch(
             ng-repeat='h in _.range(0, buckets.h)'
             ng-style="{backgroundColor: Color().hsl(h*360/buckets.h, 100, 50)}"
           )
-        .indexes.scale
+        .scale
           span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*buckets.h/3 | number}}
 
     notes: :marked( smartypants )
@@ -184,13 +183,13 @@ html
 
       .saturation( ng-init='hsl = Color().hsl(300, 100, 50); buckets.s = 10' )
         p Picking from our rainbow,
-        .hues.scale
+        .scale
           span.swatch(
             ng-repeat='h in _.range(0, 360)'
             ng-style="{backgroundColor: Color().hsl(h, 100, 50)}"
             ng-mouseenter='hsl.h = h'
           )
-        .indexes.scale
+        .scale
           span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
 
         p a hue of 
@@ -200,12 +199,12 @@ html
           input.c( ng-model='buckets.s' type='number' step=10 )
           | :
 
-        .saturations.scale
+        .scale
           span.swatch(
             ng-repeat='s in _.range(0, buckets.s)'
             ng-style="{backgroundColor: Color().hsl(hsl.h, s*100/buckets.s, hsl.l)}"
           )
-        .indexes.scale
+        .scale
           span( ng-repeat='c in [0, 1, 2]' ) {{c*buckets.s/2 | number}}
 
     slide
@@ -217,12 +216,12 @@ html
         p How much <b>light</b> is falling on our color? 
           input.c( ng-model='buckets.l' type='number' step=10 )
 
-        .lightness.scale
+        .scale
           span.swatch(
             ng-repeat='l in _.range(0, buckets.l)'
             ng-style="{backgroundColor: Color().hsl(hsl.h, hsl.s, l*100/buckets.l)}"
           )
-        .indexes.scale
+        .scale
           span( ng-repeat='c in [0, 1, 2]' ) {{c*buckets.l/2 | number}}
       
     slide
@@ -230,60 +229,107 @@ html
         Putting it all together
         =======================
 
-      .picker
+      .picker( ng-init='color = Color("papayawhip")' )
         .row.hue
           .col-xs-1
             input.c(
-              ng-model='hsl.h'
+              ng-model='color.h'
               placeholder='H'
-              ng-style='{borderBottomColor: Color().hsl(hsl.h, 100, 50)}'
+              ng-style='{borderBottomColor: Color().hsl(color.h, 100, 50)}'
             )
           .col-xs-11
-            .hues.scale
+            .scale
               span.swatch(
                 ng-repeat='h in _.range(0, 360)'
                 ng-style="{backgroundColor: Color().hsl(h, 100, 50)}"
-                ng-mouseenter='hsl.h = h'
+                ng-mouseenter='color.h = h'
               )
-            .indexes.scale
+            .scale
               span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
         .row.saturation
           .col-xs-1
             input.c(
-              ng-model='hsl.s'
+              ng-model='color.s'
               placeholder='S'
-              ng-style='{borderBottomColor: Color().hsl(hsl.h, hsl.s, 50)}'
+              ng-style='{borderBottomColor: Color().hsl(color.h, color.s, 50)}'
             )
           .col-xs-11
-            .hues.scale
+            .scale
               span.swatch(
-                ng-repeat='s in _.range(0, 100)'
-                ng-style="{backgroundColor: Color().hsl(hsl.h, s, 50)}"
-                ng-mouseenter='hsl.s = s'
+                ng-repeat='s in _.range(0, 101)'
+                ng-style="{backgroundColor: Color().hsl(color.h, s, 50)}"
+                ng-mouseenter='color.s = s'
               )
-            .indexes.scale
+            .scale
               span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
         .row.lightness
           .col-xs-1
             input.c(
-              ng-model='hsl.l'
+              ng-model='color.l'
               placeholder='L'
-              ng-style='{borderBottomColor: Color().hsl(hsl.h, 100, hsl.l)}'
+              ng-style='{borderBottomColor: Color().hsl(color.h, 100, color.l)}'
             )
           .col-xs-11
-            .hues.scale
+            .scale
               span.swatch(
-                ng-repeat='l in _.range(0, 100)'
-                ng-style="{backgroundColor: Color().hsl(hsl.h, 100, l)}"
-                ng-mouseenter='hsl.l = l'
+                ng-repeat='l in _.range(0, 101)'
+                ng-style="{backgroundColor: Color().hsl(color.h, 100, l)}"
+                ng-mouseenter='color.l = l'
               )
-            .indexes.scale
+            .scale
               span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
 
         .row: .col-xs-1
-          span.swatch( ng-style='{backgroundColor: hsl}' )
+          span.swatch( ng-style='{backgroundColor: color}' )
 
-        p [ linked RGB sliders ]
+        .row.red
+          .col-xs-1
+            input.c(
+              ng-model='color.r'
+              placeholder='R'
+              ng-style='{borderBottomColor: color.rx}'
+            )
+          .col-xs-11
+            .scale
+              span.swatch(
+                ng-repeat='r in _.range(0, 256)'
+                ng-style="{backgroundColor: Color().red(r)}"
+                ng-mouseenter='color.r = r'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*256/2 | number}}
+        .row.green
+          .col-xs-1
+            input.c(
+              ng-model='color.g'
+              placeholder='G'
+              ng-style='{borderBottomColor: color.gx}'
+            )
+          .col-xs-11
+            .scale
+              span.swatch(
+                ng-repeat='g in _.range(0, 256)'
+                ng-style="{backgroundColor: Color().green(g)}"
+                ng-mouseenter='color.g = g'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*256/2 | number}}
+        .row.red
+          .col-xs-1
+            input.c(
+              ng-model='color.b'
+              placeholder='B'
+              ng-style='{borderBottomColor: color.bx}'
+            )
+          .col-xs-11
+            .scale
+              span.swatch(
+                ng-repeat='b in _.range(0, 256)'
+                ng-style="{backgroundColor: Color().blue(b)}"
+                ng-mouseenter='color.b = b'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*256/2 | number}}
 
     notes
       :marked( smartypants )
