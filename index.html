@@ -5,7 +5,7 @@ meetup.</p>
 <p>The source for these slides is available at
 <a href="https://github.com/visnup/hsl">github.com/visnup/hsl</a>.</p>
 </notes><slide class="xs-center"><h1 id="the-problem">The Problem</h1>
-<div ng-init="lhs=RGB(&quot;ff&quot;,&quot;a5&quot;,&quot;00&quot;); rhs=RGB(&quot;33&quot;,&quot;33&quot;,&quot;33&quot;)"><span ng-style="{backgroundColor: lhs}" class="swatch"></span><input ng-model="lhs.r" placeholder="R" ng-style="{borderBottomColor: lhs.rx}" class="c"><input ng-model="lhs.g" placeholder="G" ng-style="{borderBottomColor: lhs.gx}" class="c"><input ng-model="lhs.b" placeholder="B" ng-style="{borderBottomColor: lhs.bx}" class="c"><div class="op text-muted">+</div><span ng-style="{backgroundColor: rhs}" class="swatch"></span><input ng-model="rhs.r" placeholder="R" ng-style="{borderBottomColor: rhs.rx}" class="c"><input ng-model="rhs.g" placeholder="G" ng-style="{borderBottomColor: rhs.gx}" class="c"><input ng-model="rhs.b" placeholder="B" ng-style="{borderBottomColor: rhs.bx}" class="c"><div class="op text-muted">=</div><span ng-show="false">{{sum = lhs.plus(rhs)}}</span><span ng-style="{backgroundColor: sum}" class="swatch"></span><input ng-model="sum.r" placeholder="R" ng-style="{borderBottomColor: sum.rx}" readonly class="c"><input ng-model="sum.g" placeholder="G" ng-style="{borderBottomColor: sum.gx}" readonly class="c"><input ng-model="sum.b" placeholder="B" ng-style="{borderBottomColor: sum.bx}" readonly class="c"></div></slide><notes><h2 id="rgb-rgb-">RGB + RGB = 🤔</h2>
+<div ng-init="lhs=Color(&quot;#ffa500&quot;); rhs=Color(&quot;#333333&quot;)"><span ng-style="{backgroundColor: lhs}" class="swatch"></span><input ng-model="lhs.r" placeholder="R" ng-style="{borderBottomColor: lhs.rx}" class="c"><input ng-model="lhs.g" placeholder="G" ng-style="{borderBottomColor: lhs.gx}" class="c"><input ng-model="lhs.b" placeholder="B" ng-style="{borderBottomColor: lhs.bx}" class="c"><div class="op text-muted">+</div><span ng-style="{backgroundColor: rhs}" class="swatch"></span><input ng-model="rhs.r" placeholder="R" ng-style="{borderBottomColor: rhs.rx}" class="c"><input ng-model="rhs.g" placeholder="G" ng-style="{borderBottomColor: rhs.gx}" class="c"><input ng-model="rhs.b" placeholder="B" ng-style="{borderBottomColor: rhs.bx}" class="c"><div class="op text-muted">=</div><span ng-show="false">{{sum = lhs.plus(rhs)}}</span><span ng-style="{backgroundColor: sum}" class="swatch"></span><input ng-model="sum.r" placeholder="R" ng-style="{borderBottomColor: sum.rx}" readonly class="c"><input ng-model="sum.g" placeholder="G" ng-style="{borderBottomColor: sum.gx}" readonly class="c"><input ng-model="sum.b" placeholder="B" ng-style="{borderBottomColor: sum.bx}" readonly class="c"></div></slide><notes><h2 id="rgb-rgb-">RGB + RGB = 🤔</h2>
 <p><code>#ffa500</code> – that’s orange. <code>#ffd833</code> – that’s not a lighter orange;
 it’s yellow. <em>Of course</em>, you’re thinking, <em>one does not simply add
 some GB to RGB to lighten a color</em>.</p>
@@ -19,7 +19,7 @@ adding-colors-of-light-together world. You know who lives in that
 world?  LEDs and CRTs, that’s who. And scientists who play with lasers,
 AKA crazy people.</p>
 </notes><slide><h1 id="rgb-adding-lasers-together">RGB: adding lasers together</h1>
-<div ng-init="rgb=RGB(&quot;ff&quot;,&quot;a5&quot;,&quot;00&quot;)"><span ng-style="{backgroundColor: rgb}" class="swatch"></span><input ng-model="rgb.r" placeholder="R" ng-style="{borderBottomColor: rgb.rx}" class="c"><input ng-model="rgb.g" placeholder="G" ng-style="{borderBottomColor: rgb.gx}" class="c"><input ng-model="rgb.b" placeholder="B" ng-style="{borderBottomColor: rgb.bx}" class="c"></div></slide><notes><ul>
+<div ng-init="rgb=Color(&quot;#ffa500&quot;)"><span ng-style="{backgroundColor: rgb}" class="swatch"></span><input ng-model="rgb.r" placeholder="R" ng-style="{borderBottomColor: rgb.rx}" class="c"><input ng-model="rgb.g" placeholder="G" ng-style="{borderBottomColor: rgb.gx}" class="c"><input ng-model="rgb.b" placeholder="B" ng-style="{borderBottomColor: rgb.bx}" class="c"></div></slide><notes><ul>
 <li>Demo: RGB values next to each other and the color they make (zoom
 in and out)</li>
 </ul>
@@ -29,7 +29,7 @@ small batches to give to your friends in Oakland.</p>
 <p>RGB <em>is</em> like that guy in a North Face jacket and hoodie on the 38L
 Geary headed downtown, doing a line of cocaine off his iPhone. Yeah,
 RGB is not a “so-uncool-it’s-cool-again” thing.</p>
-</notes><slide><div style="display: flex; text-align: center" class="cool-not-cool"><div><h3>Probably still cool</h3><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote></div>&nbsp;<div><h3>Not cool</h3><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div></div></slide><slide><h1 id="rgb-is-a-color-space">RGB is a color space</h1>
+</notes><slide><div class="row center-sm"><div class="col-xs-12 col-sm-6"><h3>Probably still cool</h3><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote></div><div class="col-xs-12 col-sm-6"><h3>Not cool</h3><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div></div></slide><slide><h1 id="rgb-is-a-color-space">RGB is a color space</h1>
 <p>[cool R, G, B = X, Y, Z thing]</p>
 </slide><notes><p>RGB is what we call a <strong>color space</strong>, which sounds more scary than it
 really is. I’d define a color space as “a system to specify a color and
@@ -65,7 +65,7 @@ you compare those colors to each other?</p>
 <p>How about, let’s just take the rainbow (<strong>ROY G. BIV!</strong>) and stick it in
 a kinda big array:</p>
 </notes><slide><h2 id="color-swatch-hue">Color / Swatch / Hue</h2>
-<div ng-init="buckets.h = 9" class="hue"><p>Let’s divide the rainbow up into <input ng-model="buckets.h" type="number" step="3" class="c"> colors:</p><div class="hues scale"><span ng-repeat="h in _.range(0, buckets.h)" ng-style="{backgroundColor: HSL(h*360/buckets.h, 100, 50)}" class="swatch"></span></div><div class="indexes scale"><span ng-repeat="c in [0, 1, 2, 3]">{{c*buckets.h/3 | number}}</span></div></div></slide><notes><p>That’s kinda intuitive-looking already. We’ve got lots of the colors we
+<div ng-init="buckets.h = 9" class="hue"><p>Let’s divide the rainbow up into <input ng-model="buckets.h" type="number" step="3" class="c"> colors:</p><div class="scale"><span ng-repeat="h in _.range(0, buckets.h)" ng-style="{backgroundColor: Color().hsl(h*360/buckets.h, 100, 50)}" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2, 3]">{{c*buckets.h/3 | number}}</span></div></div></slide><notes><p>That’s kinda intuitive-looking already. We’ve got lots of the colors we
 care about in an array indexed from 0 to {{buckets.h}}. So, if I want red
 I just grab the color at 0 and if I want magenta, I grab the one at
 {{buckets.h}}. {{buckets.h/3}}ish is green and {{buckets.h*2/3}}ish is
@@ -74,10 +74,10 @@ predictable color from the rainbow.</p>
 <p>We want to have more crayons in our box though, so increase that number
 to something high, like 99. Now we’re getting a proper rainbow.</p>
 </notes><slide><h2 id="brightness-colorfulness-saturation">Brightness / Colorfulness / Saturation</h2>
-<div ng-init="hsl = HSL(300, 100, 50); buckets.s = 10" class="saturation"><p>Picking from our rainbow,</p><div class="hues scale"><span ng-repeat="h in _.range(0, 360)" ng-style="{backgroundColor: HSL(h, 100, 50)}" ng-mouseenter="hsl.h = h" class="swatch"></span></div><div class="indexes scale"><span ng-repeat="c in [0, 1, 2, 3]">{{c*360/3 | number}}</span></div><p>a hue of <span ng-style="{backgroundColor: HSL(hsl.h, 100, 50)}" class="swatch"></span><input ng-model="hsl.h" placeholder="H" ng-style="{borderBottomColor: HSL(hsl.h, 100, 50)}" class="c">, let’s bucket its <b>colorfulness</b> on a scale from 0 to <input ng-model="buckets.s" type="number" step="10" class="c">:</p><div class="saturations scale"><span ng-repeat="s in _.range(0, buckets.s)" ng-style="{backgroundColor: HSL(hsl.h, s*100/buckets.s, hsl.l)}" class="swatch"></span></div><div class="indexes scale"><span ng-repeat="c in [0, 1, 2]">{{c*buckets.s/2 | number}}</span></div></div></slide><slide><h2 id="lightness">Lightness</h2>
-<div class="lightness"><p>Picking from our rainbow,</p><div class="hues scale"><span ng-repeat="h in _.range(0, 360)" ng-style="{backgroundColor: HSL(h, 100, 50)}" ng-mouseenter="hsl.h = h" class="swatch"></span></div><div class="indexes scale"><span ng-repeat="c in [0, 1, 2, 3]">{{c*360/3 | number}}</span></div><p>a hue of <span ng-style="{backgroundColor: HSL(hsl.h, 100, 50)}" class="swatch"></span><input ng-model="hsl.h" placeholder="H" ng-style="{borderBottomColor: HSL(hsl.h, 100, 50)}" class="c">, and from our saturation scale,</p><div class="saturations scale"><span ng-repeat="s in _.range(0, 100)" ng-style="{backgroundColor: HSL(hsl.h, s, hsl.l)}" ng-mouseenter="hsl.s = s" class="swatch"></span></div><div class="indexes scale"><span ng-repeat="c in [0, 1, 2]">{{c*100/2 | number}}</span></div><p>a saturation of <span ng-style="{backgroundColor: HSL(hsl.h, hsl.s, 50)}" class="swatch"></span><input ng-model="hsl.s" placeholder="S" ng-style="{borderBottomColor: HSL(hsl.h, hsl.s, 50)}" class="c"></p><div class="lightness scale"><span ng-repeat="l in _.range(0, 100)" ng-style="{backgroundColor: HSL(hsl.h, hsl.s, l)}" class="swatch"></span></div><div class="indexes scale"><span ng-repeat="c in [0, 1, 2]">{{c*100/2 | number}}</span></div></div></slide><slide><h1 id="putting-it-all-together">Putting it all together</h1>
-</slide><notes><ul>
-<li>Gamut</li>
+<div ng-init="hsl = Color().hsl(300, 100, 50); buckets.s = 10" class="saturation"><p>Picking from our rainbow,</p><div class="scale"><span ng-repeat="h in _.range(0, 360)" ng-style="{backgroundColor: Color().hsl(h, 100, 50)}" ng-mouseenter="hsl.h = h" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2, 3]">{{c*360/3 | number}}</span></div><p>a hue of <span ng-style="{backgroundColor: Color().hsl(hsl.h, 100, 50)}" class="swatch"></span><input ng-model="hsl.h" placeholder="H" ng-style="{borderBottomColor: Color().hsl(hsl.h, 100, 50)}" class="c">, let’s bucket its <b>colorfulness</b> on a scale from 0 to <input ng-model="buckets.s" type="number" step="10" class="c">:</p><div class="scale"><span ng-repeat="s in _.range(0, buckets.s)" ng-style="{backgroundColor: Color().hsl(hsl.h, s*100/buckets.s, hsl.l)}" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*buckets.s/2 | number}}</span></div></div></slide><slide><h2 id="whiteness-light-lightness">Whiteness / Light / Lightness</h2>
+<div ng-init="buckets.l = 10" class="lightness"><p>How much <b>light</b> is falling on our color? <input ng-model="buckets.l" type="number" step="10" class="c"></p><div class="scale"><span ng-repeat="l in _.range(0, buckets.l)" ng-style="{backgroundColor: Color().hsl(hsl.h, hsl.s, l*100/buckets.l)}" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*buckets.l/2 | number}}</span></div></div></slide><slide><h1 id="putting-it-all-together">Putting it all together</h1>
+<div ng-init="color = Color(&quot;papayawhip&quot;)" class="picker"><div class="row hue"><div class="col-xs-1"><input ng-model="color.h" placeholder="H" ng-style="{borderBottomColor: Color().hsl(color.h, 100, 50)}" class="c"></div><div class="col-xs-11"><div class="scale"><span ng-repeat="h in _.range(0, 360)" ng-style="{backgroundColor: Color().hsl(h, 100, 50)}" ng-mouseenter="color.h = h" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2, 3]">{{c*360/3 | number}}</span></div></div></div><div class="row saturation"><div class="col-xs-1"><input ng-model="color.s" placeholder="S" ng-style="{borderBottomColor: Color().hsl(color.h, color.s, 50)}" class="c"></div><div class="col-xs-11"><div class="scale"><span ng-repeat="s in _.range(0, 101)" ng-style="{backgroundColor: Color().hsl(color.h, s, 50)}" ng-mouseenter="color.s = s" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*100/2 | number}}</span></div></div></div><div class="row lightness"><div class="col-xs-1"><input ng-model="color.l" placeholder="L" ng-style="{borderBottomColor: Color().hsl(color.h, 100, color.l)}" class="c"></div><div class="col-xs-11"><div class="scale"><span ng-repeat="l in _.range(0, 101)" ng-style="{backgroundColor: Color().hsl(color.h, 100, l)}" ng-mouseenter="color.l = l" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*100/2 | number}}</span></div></div></div><div class="row"><div class="col-xs-1"><span ng-style="{backgroundColor: color}" class="swatch"></span></div></div><div class="row red"><div class="col-xs-1"><input ng-model="color.r" placeholder="R" ng-style="{borderBottomColor: color.rx}" class="c"></div><div class="col-xs-11"><div class="scale"><span ng-repeat="r in _.range(0, 256)" ng-style="{backgroundColor: Color().red(r)}" ng-mouseenter="color.r = r" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*256/2 | number}}</span></div></div></div><div class="row green"><div class="col-xs-1"><input ng-model="color.g" placeholder="G" ng-style="{borderBottomColor: color.gx}" class="c"></div><div class="col-xs-11"><div class="scale"><span ng-repeat="g in _.range(0, 256)" ng-style="{backgroundColor: Color().green(g)}" ng-mouseenter="color.g = g" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*256/2 | number}}</span></div></div></div><div class="row red"><div class="col-xs-1"><input ng-model="color.b" placeholder="B" ng-style="{borderBottomColor: color.bx}" class="c"></div><div class="col-xs-11"><div class="scale"><span ng-repeat="b in _.range(0, 256)" ng-style="{backgroundColor: Color().blue(b)}" ng-mouseenter="color.b = b" class="swatch"></span></div><div class="scale"><span ng-repeat="c in [0, 1, 2]">{{c*256/2 | number}}</span></div></div></div></div></slide><notes><ul>
+<li>Same domain as RGB</li>
 <li>Transform from RGB</li>
 </ul>
 </notes><slide><h1 id="let-s-do-some-stuff-with-hsl">Let’s do some stuff with HSL</h1>
@@ -114,50 +114,33 @@ kombucha you’re drinking. It’s called <a href="https://en.wikipedia.org/wiki
 <li>Lightness</li>
 <li>Perceptual uniformity</li>
 </ul>
-</notes><script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js"></script><script>'use strict'
+</notes><script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js"></script><script src="color.min.js"></script><script>'use strict'
 
-class RGB {
-  constructor(r, g, b) {
-    this.r = r
-    this.g = g
-    this.b = b
-  }
+Object.defineProperties(Color.prototype, {
+  r: { get: Color.prototype.red, set: Color.prototype.red },
+  g: { get: Color.prototype.green, set: Color.prototype.green },
+  b: { get: Color.prototype.blue, set: Color.prototype.blue },
 
-  set r(r) { this._r = parseInt(r || 0, 16) }
-  set g(g) { this._g = parseInt(g || 0, 16) }
-  set b(b) { this._b = parseInt(b || 0, 16) }
+  rx: { get: function() { return Color().red(this.red()) } },
+  gx: { get: function() { return Color().green(this.green()) } },
+  bx: { get: function() { return Color().blue(this.blue()) } },
 
-  get r()  { return this._r.toString(16) }
-  get g()  { return this._g.toString(16) }
-  get b()  { return this._b.toString(16) }
+  h: { get: Color.prototype.hue, set: Color.prototype.hue },
+  s: { get: Color.prototype.saturation, set: Color.prototype.saturation },
+  l: { get: Color.prototype.lightness, set: Color.prototype.lightness },
 
-  get rx() { return new RGB(this._r, 0, 0) }
-  get gx() { return new RGB(0, this._g, 0) }
-  get bx() { return new RGB(0, 0, this._b) }
+  toString: { value: Color.prototype.rgbString },
 
-  plus(other) {
-    var r = _.clamp(this._r + other._r, 0, 255),
-        g = _.clamp(this._g + other._g, 0, 255),
-        b = _.clamp(this._b + other._b, 0, 255)
-    return new RGB(r.toString(16), g.toString(16), b.toString(16))
-  }
-
-  toString() {
-    return `rgb(${this._r},${this._g},${this._b})`
-  }
-}
-
-class HSL {
-  constructor(h, s, l) {
-    this.h = h
-    this.s = s
-    this.l = l
-  }
-
-  toString() {
-    return `hsl(${this.h},${this.s}%,${this.l}%)`
-  }
-}
+  // reductio ad absurdum
+  plus: {
+    value: function(other) {
+      var r = _.clamp(this.r + other.r, 0, 255),
+          g = _.clamp(this.g + other.g, 0, 255),
+          b = _.clamp(this.b + other.b, 0, 255)
+      return Color().rgb(r, g, b)
+    }
+  },
+})
 
 angular
   .module('hsl', [])
@@ -195,6 +178,5 @@ angular
   })
   .run(function($rootScope) {
     $rootScope._ = _
-    $rootScope.RGB = function(r, g, b) { return new RGB(r, g, b) }
-    $rootScope.HSL = function(h, s, l) { return new HSL(h, s, l) }
+    $rootScope.Color = Color
   })</script></deck></body></html>

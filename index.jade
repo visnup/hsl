@@ -30,7 +30,7 @@ html
         The Problem
         ===========
 
-      div( ng-init='lhs=RGB("ff","a5","00"); rhs=RGB("33","33","33")' )
+      div( ng-init='lhs=Color("#ffa500"); rhs=Color("#333333")' )
         span.swatch( ng-style="{backgroundColor: lhs}" )
         input.c( ng-model='lhs.r' placeholder='R' ng-style='{borderBottomColor: lhs.rx}' )
         input.c( ng-model='lhs.g' placeholder='G' ng-style='{borderBottomColor: lhs.gx}' )
@@ -70,7 +70,7 @@ html
         RGB: adding lasers together
         ===========================
 
-      div( ng-init='rgb=RGB("ff","a5","00")' )
+      div( ng-init='rgb=Color("#ffa500")' )
         span.swatch( ng-style="{backgroundColor: rgb}" )
         input.c( ng-model='rgb.r' placeholder='R' ng-style='{borderBottomColor: rgb.rx}' )
         input.c( ng-model='rgb.g' placeholder='G' ng-style='{borderBottomColor: rgb.gx}' )
@@ -89,12 +89,11 @@ html
       RGB is not a "so-uncool-it’s-cool-again" thing.
 
     slide
-      .cool-not-cool( style='display: flex; text-align: center' )
-        div
+      .row.center-sm
+        .col-xs-12.col-sm-6
           h3 Probably still cool
           != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote>'
-        | &nbsp;
-        div
+        .col-xs-12.col-sm-6
           h3 Not cool
           != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
 
@@ -158,12 +157,12 @@ html
           input.c( ng-model='buckets.h' type='number' step=3 )
           |  colors:
 
-        .hues.scale
+        .scale
           span.swatch(
             ng-repeat='h in _.range(0, buckets.h)'
-            ng-style="{backgroundColor: HSL(h*360/buckets.h, 100, 50)}"
+            ng-style="{backgroundColor: Color().hsl(h*360/buckets.h, 100, 50)}"
           )
-        .indexes.scale
+        .scale
           span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*buckets.h/3 | number}}
 
     notes: :marked( smartypants )
@@ -182,81 +181,159 @@ html
         Brightness / Colorfulness / Saturation
         --------------------------------------
 
-      .saturation( ng-init='hsl = HSL(300, 100, 50); buckets.s = 10' )
+      .saturation( ng-init='hsl = Color().hsl(300, 100, 50); buckets.s = 10' )
         p Picking from our rainbow,
-        .hues.scale
+        .scale
           span.swatch(
             ng-repeat='h in _.range(0, 360)'
-            ng-style="{backgroundColor: HSL(h, 100, 50)}"
+            ng-style="{backgroundColor: Color().hsl(h, 100, 50)}"
             ng-mouseenter='hsl.h = h'
           )
-        .indexes.scale
+        .scale
           span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
 
         p a hue of 
-          span.swatch( ng-style='{backgroundColor: HSL(hsl.h, 100, 50)}' )
-          input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: HSL(hsl.h, 100, 50)}' )
+          span.swatch( ng-style='{backgroundColor: Color().hsl(hsl.h, 100, 50)}' )
+          input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: Color().hsl(hsl.h, 100, 50)}' )
           | , let’s bucket its <b>colorfulness</b> on a scale from 0 to 
           input.c( ng-model='buckets.s' type='number' step=10 )
           | :
 
-        .saturations.scale
+        .scale
           span.swatch(
             ng-repeat='s in _.range(0, buckets.s)'
-            ng-style="{backgroundColor: HSL(hsl.h, s*100/buckets.s, hsl.l)}"
+            ng-style="{backgroundColor: Color().hsl(hsl.h, s*100/buckets.s, hsl.l)}"
           )
-        .indexes.scale
+        .scale
           span( ng-repeat='c in [0, 1, 2]' ) {{c*buckets.s/2 | number}}
 
     slide
       :marked( smartypants )
-        Lightness
-        ---------
+        Whiteness / Light / Lightness
+        -----------------------------
 
-      .lightness
-        p Picking from our rainbow,
-        .hues.scale
+      .lightness( ng-init='buckets.l = 10' )
+        p How much <b>light</b> is falling on our color? 
+          input.c( ng-model='buckets.l' type='number' step=10 )
+
+        .scale
           span.swatch(
-            ng-repeat='h in _.range(0, 360)'
-            ng-style="{backgroundColor: HSL(h, 100, 50)}"
-            ng-mouseenter='hsl.h = h'
+            ng-repeat='l in _.range(0, buckets.l)'
+            ng-style="{backgroundColor: Color().hsl(hsl.h, hsl.s, l*100/buckets.l)}"
           )
-        .indexes.scale
-          span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
-
-        p a hue of 
-          span.swatch( ng-style='{backgroundColor: HSL(hsl.h, 100, 50)}' )
-          input.c( ng-model='hsl.h' placeholder='H' ng-style='{borderBottomColor: HSL(hsl.h, 100, 50)}' )
-          | , and from our saturation scale,
-
-        .saturations.scale
-          span.swatch(
-            ng-repeat='s in _.range(0, 100)'
-            ng-style="{backgroundColor: HSL(hsl.h, s, hsl.l)}"
-            ng-mouseenter='hsl.s = s'
-          )
-        .indexes.scale
-          span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
-
-        p a saturation of 
-          span.swatch( ng-style='{backgroundColor: HSL(hsl.h, hsl.s, 50)}' )
-          input.c( ng-model='hsl.s' placeholder='S' ng-style='{borderBottomColor: HSL(hsl.h, hsl.s, 50)}' )
-
-        .lightness.scale
-          span.swatch(
-            ng-repeat='l in _.range(0, 100)'
-            ng-style="{backgroundColor: HSL(hsl.h, hsl.s, l)}"
-          )
-        .indexes.scale
-          span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+        .scale
+          span( ng-repeat='c in [0, 1, 2]' ) {{c*buckets.l/2 | number}}
       
     slide
       :marked( smartypants )
         Putting it all together
         =======================
+
+      .picker( ng-init='color = Color("papayawhip")' )
+        .row.hue
+          .col-xs-1
+            input.c(
+              ng-model='color.h'
+              placeholder='H'
+              ng-style='{borderBottomColor: Color().hsl(color.h, 100, 50)}'
+            )
+          .col-xs-11
+            .scale
+              span.swatch(
+                ng-repeat='h in _.range(0, 360)'
+                ng-style="{backgroundColor: Color().hsl(h, 100, 50)}"
+                ng-mouseenter='color.h = h'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2, 3]' ) {{c*360/3 | number}}
+        .row.saturation
+          .col-xs-1
+            input.c(
+              ng-model='color.s'
+              placeholder='S'
+              ng-style='{borderBottomColor: Color().hsl(color.h, color.s, 50)}'
+            )
+          .col-xs-11
+            .scale
+              span.swatch(
+                ng-repeat='s in _.range(0, 101)'
+                ng-style="{backgroundColor: Color().hsl(color.h, s, 50)}"
+                ng-mouseenter='color.s = s'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+        .row.lightness
+          .col-xs-1
+            input.c(
+              ng-model='color.l'
+              placeholder='L'
+              ng-style='{borderBottomColor: Color().hsl(color.h, 100, color.l)}'
+            )
+          .col-xs-11
+            .scale
+              span.swatch(
+                ng-repeat='l in _.range(0, 101)'
+                ng-style="{backgroundColor: Color().hsl(color.h, 100, l)}"
+                ng-mouseenter='color.l = l'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*100/2 | number}}
+
+        .row: .col-xs-1
+          span.swatch( ng-style='{backgroundColor: color}' )
+
+        .row.red
+          .col-xs-1
+            input.c(
+              ng-model='color.r'
+              placeholder='R'
+              ng-style='{borderBottomColor: color.rx}'
+            )
+          .col-xs-11
+            .scale
+              span.swatch(
+                ng-repeat='r in _.range(0, 256)'
+                ng-style="{backgroundColor: Color().red(r)}"
+                ng-mouseenter='color.r = r'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*256/2 | number}}
+        .row.green
+          .col-xs-1
+            input.c(
+              ng-model='color.g'
+              placeholder='G'
+              ng-style='{borderBottomColor: color.gx}'
+            )
+          .col-xs-11
+            .scale
+              span.swatch(
+                ng-repeat='g in _.range(0, 256)'
+                ng-style="{backgroundColor: Color().green(g)}"
+                ng-mouseenter='color.g = g'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*256/2 | number}}
+        .row.red
+          .col-xs-1
+            input.c(
+              ng-model='color.b'
+              placeholder='B'
+              ng-style='{borderBottomColor: color.bx}'
+            )
+          .col-xs-11
+            .scale
+              span.swatch(
+                ng-repeat='b in _.range(0, 256)'
+                ng-style="{backgroundColor: Color().blue(b)}"
+                ng-mouseenter='color.b = b'
+              )
+            .scale
+              span( ng-repeat='c in [0, 1, 2]' ) {{c*256/2 | number}}
+
     notes
       :marked( smartypants )
-        - Gamut
+        - Same domain as RGB
         - Transform from RGB
       
     slide
@@ -324,51 +401,35 @@ html
       
     script( src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js' )
     script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js' )
+    script( src='color.min.js' )
     script.
       'use strict'
 
-      class RGB {
-        constructor(r, g, b) {
-          this.r = r
-          this.g = g
-          this.b = b
-        }
+      Object.defineProperties(Color.prototype, {
+        r: { get: Color.prototype.red, set: Color.prototype.red },
+        g: { get: Color.prototype.green, set: Color.prototype.green },
+        b: { get: Color.prototype.blue, set: Color.prototype.blue },
 
-        set r(r) { this._r = parseInt(r || 0, 16) }
-        set g(g) { this._g = parseInt(g || 0, 16) }
-        set b(b) { this._b = parseInt(b || 0, 16) }
+        rx: { get: function() { return Color().red(this.red()) } },
+        gx: { get: function() { return Color().green(this.green()) } },
+        bx: { get: function() { return Color().blue(this.blue()) } },
 
-        get r()  { return this._r.toString(16) }
-        get g()  { return this._g.toString(16) }
-        get b()  { return this._b.toString(16) }
+        h: { get: Color.prototype.hue, set: Color.prototype.hue },
+        s: { get: Color.prototype.saturation, set: Color.prototype.saturation },
+        l: { get: Color.prototype.lightness, set: Color.prototype.lightness },
 
-        get rx() { return new RGB(this._r, 0, 0) }
-        get gx() { return new RGB(0, this._g, 0) }
-        get bx() { return new RGB(0, 0, this._b) }
+        toString: { value: Color.prototype.rgbString },
 
-        plus(other) {
-          var r = _.clamp(this._r + other._r, 0, 255),
-              g = _.clamp(this._g + other._g, 0, 255),
-              b = _.clamp(this._b + other._b, 0, 255)
-          return new RGB(r.toString(16), g.toString(16), b.toString(16))
-        }
-
-        toString() {
-          return `rgb(${this._r},${this._g},${this._b})`
-        }
-      }
-
-      class HSL {
-        constructor(h, s, l) {
-          this.h = h
-          this.s = s
-          this.l = l
-        }
-
-        toString() {
-          return `hsl(${this.h},${this.s}%,${this.l}%)`
-        }
-      }
+        // reductio ad absurdum
+        plus: {
+          value: function(other) {
+            var r = _.clamp(this.r + other.r, 0, 255),
+                g = _.clamp(this.g + other.g, 0, 255),
+                b = _.clamp(this.b + other.b, 0, 255)
+            return Color().rgb(r, g, b)
+          }
+        },
+      })
 
       angular
         .module('hsl', [])
@@ -406,6 +467,5 @@ html
         })
         .run(function($rootScope) {
           $rootScope._ = _
-          $rootScope.RGB = function(r, g, b) { return new RGB(r, g, b) }
-          $rootScope.HSL = function(h, s, l) { return new HSL(h, s, l) }
+          $rootScope.Color = Color
         })
