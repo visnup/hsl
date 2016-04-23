@@ -16,13 +16,13 @@ html
       -------------------------------
 
     notes: :marked( smartypants )
-      This is a talk put together for the February 2016 [PeninsulaJS][1]
-      meetup.
+      This is a talk put together for the April 2016 [DonutJS][1] meetup. You
+      can read it like a blog post or use your ← and → arrow keys to navigate
+      it like slides.
 
-      The source for these slides is available at
-      [github.com/visnup/hsl][2].
+      The source for this is available at [github.com/visnup/hsl][2].
 
-      [1]: http://peninsulajs.com/
+      [1]: http://donutjs.club/
       [2]: https://github.com/visnup/hsl
 
     slide
@@ -60,6 +60,8 @@ html
       `#ffa500` + `#004999` yields some kinda related color, but in a way
       that doesn’t exactly make sense.
 
+      ![One does not simply add RGB together](https://i.imgflip.com/12zvtk.jpg)
+
       In what world is that cool? I'll tell you in what world: in an
       adding-colors-of-light-together world. You know who lives in that
       world?  LEDs and CRTs, that’s who. And scientists who play with lasers,
@@ -72,9 +74,6 @@ html
         ![You actually want to cross the streams](lasers.gif)
 
     notes: :marked( smartypants )
-      - Demo: RGB values next to each other and the color they make (zoom
-        in and out)
-
       RGB is _not_ like some single origin, shade-grown, 1,300 meter
       elevation coffee beans you found in Alajuela, Costa Rica and roasted in
       small batches to give to your friends in Oakland.
@@ -127,7 +126,7 @@ html
       reason about sets of colors."
 
       It's actually really similar to the **Cartesian X, Y, Z** system to
-      specify positions in... _space_. So, just like I can say the corner of
+      specify positions in _space_. So, just like I can say the corner of
       the room is `{ 0, 0, 0 }` and to get to me, you go 20' along that wall
       and 10' along this other wall, and then another 5'8" upwards to get to
       my head, we can do the same thing with color. Instead of X, Y, and Z,
@@ -155,9 +154,10 @@ html
 
     notes: :marked( smartypants )
       How would you describe _to the person next to you_ the color of the <span
-      class="swatch sm" style="background:skyblue"></span> sky? How would you compare that to the
-      color of the <span class="swatch sm" style="background: aquamarine"></span> ocean? How would
-      you compare those colors to each other?
+      class="swatch sm" style="background:skyblue"></span> sky? How would you
+      compare that to the color of the <span class="swatch sm"
+      style="background: aquamarine"></span> ocean? How would you compare those
+      colors to each other?
 
       Let’s pretend we were tasked with representing all the colors in an
       _intuitive_ way. How would we start?
@@ -191,9 +191,9 @@ html
       style="background:magenta"></span> magenta, I grab the one at
       {{buckets.h}}. {{buckets.h/3}}ish is <span class="swatch sm"
       style="background:green"></span> green and {{buckets.h*2/3}}ish is <span
-      class="swatch sm" style="background:blue"></span> blue; it’s just a mapping
-      and as we move up and down the scale we get a predictable color from the
-      rainbow.
+      class="swatch sm" style="background:blue"></span> blue; it’s just a
+      mapping and as we move up and down the scale we get a predictable color
+      from the rainbow.
 
       We want to have more crayons in our box though, so increase that number
       to something high, like 99. Now we're getting a proper rainbow.
@@ -429,7 +429,10 @@ html
         Grayscale a photo
         -----------------
 
-      div: img( style='width:100%' ng-style='{"-webkit-filter": "saturate("+desaturate.s+"%)"}' src='https://scontent-sjc2-1.cdninstagram.com/t51.2885-15/e35/11244497_1651371941744361_677993537_n.jpg?ig_cache_key=MTAzNDk5MzU1MDQ3MjYzNjE3Ng%3D%3D.2' )
+      div: img(
+        style='width:100%'
+        ng-style='{"-webkit-filter": "saturate("+desaturate.s+"%)"}'
+        src='https://scontent-sjc2-1.cdninstagram.com/t51.2885-15/e35/11244497_1651371941744361_677993537_n.jpg?ig_cache_key=MTAzNDk5MzU1MDQ3MjYzNjE3Ng%3D%3D.2' )
 
       .row.hue
         .col-xs-2.col-sm-1
