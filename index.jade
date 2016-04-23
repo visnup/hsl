@@ -25,7 +25,7 @@ html
       [1]: http://donutjs.club/
       [2]: https://github.com/visnup/hsl
 
-    slide
+    slide.xs-center
       :marked( smartypants )
         The Problem
         ===========
@@ -82,14 +82,14 @@ html
       Geary headed downtown, doing a line of cocaine off his iPhone. Yeah,
       RGB is not a "so-uncool-it’s-cool-again" thing.
 
-    slide
-      .row.center-sm
-        .col-xs-12.col-sm-6
-          h3 Probably still cool
-          != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote>'
-        .col-xs-12.col-sm-6
-          h3 Not cool
-          != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote>'
+    slide.xs-center
+      h1 Probably still cool
+      != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Three cordless screwdrivers and a microcontroller = perfect small batch coffee roasting. <a href="http://t.co/vrEWlzDP9A">http://t.co/vrEWlzDP9A</a> <a href="http://t.co/GbOVyJ1jFh">pic.twitter.com/GbOVyJ1jFh</a></p>&mdash; Make: (@make) <a href="https://twitter.com/make/status/643920371780087808">September 15, 2015</a></blockquote>'
+      script( async src="https://platform.twitter.com/widgets.js" charset="utf-8" )
+
+    slide.xs-center
+      h1 Not cool
+      != '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Some guy doing lines of cocaine off his iphone on muni... <a href="http://t.co/8KgMSljp">pic.twitter.com/8KgMSljp</a></p>&mdash; Nolan Evans (@nolman) <a href="https://twitter.com/nolman/status/229042680498368513">July 28, 2012</a></blockquote>'
       script( async src="https://platform.twitter.com/widgets.js" charset="utf-8" )
 
     slide( ng-init='space = Color()' )
@@ -571,7 +571,7 @@ html
                   index--
                   break
               }
-              location.hash = _.clamp(index, 0, this.slides.length)
+              location.hash = _.clamp(index, 0, this.slides.length-1)
             }.bind(this))
           }
         })
