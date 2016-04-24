@@ -1,6 +1,6 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css);
 @import url(https://cdn.jsdelivr.net/flexboxgrid/6.3.0/flexboxgrid.min.css);
-@import url(https://fonts.googleapis.com/css?family=Catamaran:400,600|Crimson+Text:400,400italic);
+@import url(https://fonts.googleapis.com/css?family=Catamaran:400,600);
 
 body, input {
   font: xx-large 'Catamaran', sans-serif;
@@ -57,17 +57,17 @@ slide.orly img {
   transform: translate(0, 12%);
 }
 slide.orly h1 {
-  font-family: Crimson Text;
+  font-family: Palatino, serif;
   font-weight: normal;
   font-size: 600%;
   text-align: center;
   background-color: hsl(250, 100%, 60%);
   color: white;
-  padding: .25em;
+  padding: .4em 0 .25em;
   margin: 0;
 }
 slide.orly h2 {
-  font-family: Crimson Text;
+  font-family: Palatino, serif;
   font-weight: normal;
   font-style: italic;
   text-align: right;
