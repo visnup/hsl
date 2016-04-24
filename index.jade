@@ -8,7 +8,11 @@ html
 
   body( ng-app='hsl' ): deck
 
-    slide: :marked( smartypants )
+    slide.orly: :marked( smartypants )
+      ---
+
+      ![A Loris](loris.png)
+
       HSL
       ===
 
@@ -17,10 +21,10 @@ html
 
     notes: :marked( smartypants )
       This is a talk put together for the April 2016 [DonutJS][1] meetup. You
-      can read it like a blog post or use your ← and → arrow keys to navigate
-      it like slides.
+      can read it like a blog post or use your ←→ arrow keys to navigate
+      it presentation-like.
 
-      The source for this is available at [github.com/visnup/hsl][2].
+      The code is at [github.com/visnup/hsl][2].
 
       [1]: http://donutjs.club/
       [2]: https://github.com/visnup/hsl
@@ -152,6 +156,8 @@ html
       - Perform some common tasks on those colors
       - Intuitive
 
+      ![Dub all the steps](https://cdn.meme.am/instances/500x/11730615.jpg)
+
     notes: :marked( smartypants )
       How would you describe _to the person next to you_ the color of the <span
       class="swatch sm" style="background:skyblue"></span> sky? How would you
@@ -159,11 +165,11 @@ html
       style="background: aquamarine"></span> ocean? How would you compare those
       colors to each other?
 
-      Let’s pretend we were tasked with representing all the colors in an
+      Let's pretend we were tasked with representing all the colors in an
       _intuitive_ way. How would we start?
 
-      How about, let's just take the rainbow (**ROY G. BIV!**) and stick it in
-      a kinda big array:
+      Why not just take the rainbow (**ROY G. BIV!**) and stick it in a kinda
+      big array:
       
     slide
       :marked( smartypants )
@@ -198,6 +204,14 @@ html
       We want to have more crayons in our box though, so increase that number
       to something high, like 99. Now we're getting a proper rainbow.
 
+      So now that we have a box of crayons to work with, what if I don't want
+      to use like *all* a color at once? What about those duskier, more
+      washed-out colors we get on a rainy day, like <span class="swatch sm"
+      style="background:steelblue"></span> steel blue?
+
+      For each color we have in the rainbow, let's create a scale for
+      "colorfulness":
+
     slide
       :marked( smartypants )
         Brightness / Colorfulness / Saturation
@@ -229,6 +243,30 @@ html
           )
         .scale
           span( ng-repeat='c in [0, 1, 2]' ) {{c*buckets.s/2 | number}}
+
+    notes: :marked( smartypants )
+      Neat! So we've got all the colors in the rainbow and another dimension
+      can get us all of those colors 
+
+      That definitely gets us gray. It also gets us all those 
+      So now that we have a box of crayons to work with, what happened to <span
+      class="swatch sm" style="background:black"></span> black, <span
+      class="swatch sm" style="background:gray"></span> gray, and <span
+      class="swatch sm" style="background:white"></span> white? And what about
+      those duskier, more washed-out colors we get on a rainy day?
+
+      care about in an array indexed from 0 to {{buckets.h}}. So, if I want
+      <span class="swatch sm" style="background:red"></span> red I just grab the
+      color at 0 and if I want <span class="swatch sm"
+      style="background:magenta"></span> magenta, I grab the one at
+      {{buckets.h}}. {{buckets.h/3}}ish is <span class="swatch sm"
+      style="background:green"></span> green and {{buckets.h*2/3}}ish is <span
+      class="swatch sm" style="background:blue"></span> blue; it’s just a
+      mapping and as we move up and down the scale we get a predictable color
+      from the rainbow.
+
+      We want to have more crayons in our box though, so increase that number
+      to something high, like 99. Now we're getting a proper rainbow.
 
     slide
       :marked( smartypants )
@@ -374,6 +412,8 @@ html
       :marked( smartypants )
         Let's do some stuff with HSL
         ============================
+
+        ![Damn it, Leeroy](https://i.ytimg.com/vi/8lplrZKRtbY/maxresdefault.jpg)
       
     slide( ng-init='lighten = Color("orange")')
       
@@ -514,13 +554,17 @@ html
           - Google slides
         - colorhexa.com
       
-    slide
-      :marked( smartypants )
-        LAB
-        ===
+    slide.orly: :marked( smartypants )
+      ---
 
-        The HSL You've Been Waiting For
-        -------------------------------
+      ![A Loris](loris.png)
+
+      LAB
+      ===
+
+      The HSL You've Been Waiting For
+      -------------------------------
+
     notes
       :marked( smartypants )
         So, I know I just told you HSL was like the new Kanye album, but there
@@ -540,6 +584,28 @@ html
         - Perceptual uniformity
 
         [1]: https://en.wikipedia.org/wiki/Lab_color_space
+
+    slide
+      :marked( smartypants )
+        About
+        =====
+
+        Created by [Visnu][1] as a talk for [DonutJS][2] April 2016.
+
+        It's a hackery of [Pug][3] and [Markdown][4] in a (hopefully)
+        entertaining [one-file implementation][5].  Presentation is ~35 lines
+        of [Angular][6]. [three.js][7] RGB color space took another ~60 lines.
+
+        If that's interesting to you, come work with me at [Opendoor][8].
+
+        [1]: https://twitter.com/visnup
+        [2]: https://donutjs.club
+        [3]: https://github.com/pugjs
+        [4]: https://github.com/jstransformers/jstransformer-marked
+        [5]: https://github.com/visnup/hsl/blob/master/index.jade
+        [6]: https://angularjs.org
+        [7]: http://threejs.org
+        [8]: https://www.opendoor.com/jobs
 
     script( src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js' )
     script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js' )

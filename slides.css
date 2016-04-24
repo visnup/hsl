@@ -1,9 +1,9 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css);
 @import url(https://cdn.jsdelivr.net/flexboxgrid/6.3.0/flexboxgrid.min.css);
-@import url(https://fonts.googleapis.com/css?family=Catamaran:400,600);
+@import url(https://fonts.googleapis.com/css?family=Catamaran:400,600|Crimson+Text:400,400italic);
 
 body, input {
-  font: xx-large/1.75em 'Catamaran', sans-serif;
+  font: xx-large 'Catamaran', sans-serif;
   color: hsl(0, 0%, 30%);
 }
 
@@ -35,6 +35,7 @@ slide {
   min-height: 100vh;
   max-width: 50rem;
   margin: 0 auto;
+  line-height: 2em;
 }
 
 slide.xs-center {
@@ -42,6 +43,35 @@ slide.xs-center {
 }
 slide.xs-center > * {
   text-align: center;
+}
+
+slide.orly {
+  justify-content: flex-start;
+}
+slide.orly hr {
+  border: none;
+  border-top: 10px solid hsl(250, 100%, 60%);
+  margin: 0;
+}
+slide.orly img {
+  transform: translate(0, 12%);
+}
+slide.orly h1 {
+  font-family: Crimson Text;
+  font-weight: normal;
+  font-size: 600%;
+  text-align: center;
+  background-color: hsl(250, 100%, 60%);
+  color: white;
+  padding: .25em;
+  margin: 0;
+}
+slide.orly h2 {
+  font-family: Crimson Text;
+  font-weight: normal;
+  font-style: italic;
+  text-align: right;
+  margin: 0;
 }
 
 notes {
@@ -77,6 +107,7 @@ input.c {
 .swatch.sm {
   width: 1rem;
   height: 1rem;
+  border: 2px dotted hsla(0, 0%, 0%, .3);
 }
 
 .scale {
