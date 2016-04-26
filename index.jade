@@ -156,7 +156,7 @@ html
       - Perform some common tasks on those colors
       - Intuitive
 
-      ![Dub all the steps](https://cdn.meme.am/instances/500x/11730615.jpg)
+      ![Jake loves colors](https://media.giphy.com/media/FVbsOFYqdARtS/giphy.gif)
 
     notes: :marked( smartypants )
       How would you describe _to the person next to you_ the color of the <span
@@ -244,29 +244,16 @@ html
         .scale
           span( ng-repeat='c in [0, 1, 2]' ) {{c*buckets.s/2 | number}}
 
-    //notes: :marked( smartypants )
-      Neat! So we've got all the colors in the rainbow and another dimension
-      can get us all of those colors 
+    notes: :marked( smartypants )
+      Neat! So we've got all the colors in the rainbow plus a measure of
+      colorfulness to get us everthing between those colors and gray.
+      
+      But what happened to <span class="swatch sm"
+      style="background:black"></span> black, <span class="swatch sm"
+      style="background:white"></span> white?
 
-      That definitely gets us gray. It also gets us all those 
-      So now that we have a box of crayons to work with, what happened to <span
-      class="swatch sm" style="background:black"></span> black, <span
-      class="swatch sm" style="background:gray"></span> gray, and <span
-      class="swatch sm" style="background:white"></span> white? And what about
-      those duskier, more washed-out colors we get on a rainy day?
-
-      care about in an array indexed from 0 to {{buckets.h}}. So, if I want
-      <span class="swatch sm" style="background:red"></span> red I just grab the
-      color at 0 and if I want <span class="swatch sm"
-      style="background:magenta"></span> magenta, I grab the one at
-      {{buckets.h}}. {{buckets.h/3}}ish is <span class="swatch sm"
-      style="background:green"></span> green and {{buckets.h*2/3}}ish is <span
-      class="swatch sm" style="background:blue"></span> blue; it’s just a
-      mapping and as we move up and down the scale we get a predictable color
-      from the rainbow.
-
-      We want to have more crayons in our box though, so increase that number
-      to something high, like 99. Now we're getting a proper rainbow.
+      What if we add one more dimension that is about how much light we have
+      that's falling on our color?
 
     slide
       :marked( smartypants )
@@ -585,27 +572,29 @@ html
 
         [1]: https://en.wikipedia.org/wiki/Lab_color_space
 
-    slide
-      :marked( smartypants )
-        About
-        =====
+    slide: :marked( smartypants )
+      About
+      =====
 
-        Created by [Visnu][1] as a talk for [DonutJS][2] April 2016.
+      Created by [Visnu][1] as a talk for [DonutJS][2] April 2016.
 
-        It's a hackery of [Pug][3] and [Markdown][4] in a (hopefully)
-        entertaining [one-file implementation][5].  Presentation is ~35 lines
-        of [Angular][6]. [three.js][7] RGB color space took another ~60 lines.
+      [1]: https://twitter.com/visnup
+      [2]: https://donutjs.club
 
-        If that's interesting to you, come work with me at [Opendoor][8].
+    notes: :marked( smartypants )
+      These slides are a hackery of [Pug][3] and [Markdown][4] in a (hopefully)
+      entertaining [one-file implementation][5]. Presentation logic is ~35
+      lines of [Angular][6]. [three.js][7] RGB color space took another ~60
+      lines.
 
-        [1]: https://twitter.com/visnup
-        [2]: https://donutjs.club
-        [3]: https://github.com/pugjs
-        [4]: https://github.com/jstransformers/jstransformer-marked
-        [5]: https://github.com/visnup/hsl/blob/master/index.jade
-        [6]: https://angularjs.org
-        [7]: http://threejs.org
-        [8]: https://www.opendoor.com/jobs
+      If that's interesting to you, come work with me at [Opendoor][8].
+
+      [3]: https://github.com/pugjs
+      [4]: https://github.com/jstransformers/jstransformer-marked
+      [5]: https://github.com/visnup/hsl/blob/master/index.jade
+      [6]: https://angularjs.org
+      [7]: http://threejs.org
+      [8]: https://www.opendoor.com/jobs
 
     script( src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js' )
     script( src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.0/lodash.min.js' )
