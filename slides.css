@@ -3,8 +3,12 @@
 @import url(https://fonts.googleapis.com/css?family=Catamaran:400,600);
 
 body, input {
-  font: xx-large 'Catamaran', sans-serif;
+  font: x-large 'Catamaran', sans-serif;
   color: hsl(0, 0%, 30%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 100%;
 }
 
 a {
@@ -26,6 +30,7 @@ slide, notes {
   max-width: 50rem;
   margin: 0 auto;
   padding: 0 1rem;
+  line-height: 1.5em;
 }
 
 slide {
@@ -35,7 +40,6 @@ slide {
   min-height: 100vh;
   max-width: 50rem;
   margin: 0 auto;
-  line-height: 2em;
 }
 
 slide.xs-center {
@@ -63,7 +67,7 @@ slide.orly h1 {
   text-align: center;
   background-color: hsl(250, 100%, 60%);
   color: white;
-  padding: .4em 0 .25em;
+  padding: .2em 0 .1em;
   margin: 0;
 }
 slide.orly h2 {
@@ -71,12 +75,11 @@ slide.orly h2 {
   font-weight: normal;
   font-style: italic;
   text-align: right;
-  margin: 0;
+  margin: .5em 0 0;
 }
 
 notes {
   font-size: 75%;
-  line-height: 1.5em;
 }
 
 rgb-space {
